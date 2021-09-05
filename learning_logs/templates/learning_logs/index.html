@@ -1,11 +1,21 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block page_header %}
+
+<body>
+
+    <h1>TO ADD THE MENU ON THIS PAGE and the other boxes!</h1>
+
     <div class="jumbotron">
-        <h1 class="display-3">Track your learning.</h1>
-
-        <p class="lead">Learning Log helps you keep track of your learning, for any topic you're learning about.</p>
-        <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Register &raquo;</a>
-
+        <h1 class="display-3">Easy loans! Loans... easy!</h1>
+        <p class="lead">We know that our services will match your greatest expectations!</p>
     </div>
+
+    {% if not user.is_authenticated %}
+        <div class="jumbotron">
+            <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Register</a>
+        </div>
+    {% endif %}
+</body>
+
 {% endblock page_header %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Topic, Entry
-from .forms import TopicForm, EntryForm
+from .forms import TopicForm, EntryForm, UserInformationForm
 
 
 def index(request):
@@ -93,3 +93,80 @@ def edit_entry(request, entry_id):
 
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+def contact(request):
+    """The contact page."""
+    return render(request, 'learning_logs/contact.html')
+
+
+@login_required()
+def contact_form(request):
+    """The contact form."""
+    return render(request, 'learning_logs/contact_form.html')
+
+
+def about_us(request):
+    """The About us page."""
+    return render(request, 'learning_logs/about_us.html')
+
+
+@login_required()
+def my_space(request):
+    """The profile page"""
+    return render(request, 'learning_logs/my_space.html')
+
+
+@login_required()
+def apply_loan(request):
+    """The page where you can apply for a loan"""
+    return render(request, 'learning_logs/apply.html')
+
+
+def loan_calculator(request):
+    """This page displays the loan calculator"""
+    return render(request, 'learning_logs/calculator.html')
+
+
+def loans_display(request):
+    """This page displays all the loans"""
+    return render(request, 'learning_logs/loans.html')
+
+
+@login_required()
+#to use user's id?
+def my_loans(request):
+    """This page displays a user's loans and additional information"""
+    return render(request, 'learning_logs/my_loans.html')
+
+
+@login_required()
+#to use user's id
+def my_reports(request):
+    """To allow the user to display reports and to view charts"""
+    return render(request, 'learning_logs/reports.html')
+
+
+@login_required()
+#to use user's id
+def my_quotes(request):
+    """To display saved quotes"""
+    return render(request, 'learning_logs/quotes.html')
+
+
+@login_required()
+def user_details(request):
+    """To allow users to enter and amend their personal data. When done, to redirect to my_space"""
+    if request.method != 'POST':
+        #No data submitted; create a blank form.
+        form = UserInformationForm()
+    else:
+        #POST data submitted; process data.
+        form = UserInformationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('learning_logs: my_space')
+
+    #Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'learning_logs/user_details.html', context)

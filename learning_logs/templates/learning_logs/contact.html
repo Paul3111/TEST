@@ -1,0 +1,26 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact us</title>
+</head>
+<body>
+    <h2>How you can contact us:</h2>
+    <p>Test company Ltd</p>
+    <p>Telephone: 05230-112-331</p>
+    <p>e-mail: info@test2-company.com</p>
+    <p>twitter: test2company</p><br><br>
+    <h2>Where you can find us:</h2>
+    <p>1 Aleea Lalelelor</p>
+    <p>Bistrita</p>
+    <p>Bistrita-Nasaud</p>
+    <p>42007</p>
+{#add image - map, box to send message/contact form! after you press a button#}
+
+<a href="{% url 'learning_logs:contact_form' %}">Send us a message (you must be logged in)</a>
+
+</body>
+
+{% endblock content %}

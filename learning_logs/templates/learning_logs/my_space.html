@@ -1,0 +1,25 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+    <p>PROFILE PAGE HERE!</p>
+
+    <a href="{% url 'learning_logs: user_details' %}">Complete your profile</a><br>
+    <br>
+
+    <p>{{ user.username }} - here to show the first name</p>
+{#    <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>#}
+    <p>{{ user.username }} - here to show the last name</p>
+    <p>e-mail address</p>
+    <p>profile_id</p>
+    <p>alerts (yes/no tickbox)</p>
+    <p>Subscribe to newsletter? tickbox</p>
+    <p>picture on the right side</p>
+    <a href="{% url 'learning_logs:reports' %}">Reports</a>
+    <a href="{% url 'learning_logs:my_loans' %}">My Loans</a>
+    <a href="{% url 'learning_logs:quotes' %}">Saved quotes</a><br><br>
+    <p>Change password link or button</p>
+
+
+{% endblock content %}
+
