@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('learning_logs.urls')),
     path('users/', include('users.urls')),
+    path('my_space/', include('django.contrib.auth.urls')),
 ]

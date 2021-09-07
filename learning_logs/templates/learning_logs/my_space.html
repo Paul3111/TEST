@@ -2,29 +2,50 @@
 
 {% block content %}
 
-    <p>PROFILE PAGE HERE!</p>
+    <p>PROFILE</p>
 
     <a href="{% url 'learning_logs:customer_details' %}">Edit your personal details</a><br>
     <br>
 
-<ul>
-  {% for line in user_personal_data %}
-      <li>{{ line }}</li>
-  {% empty %}
-  <li><h3>No data has been added yet.</h3></li>
-  {% endfor %}
-</ul>
+{#<ul>#}
+{#  {% for line in user_personal_data %}#}
+{#      <li>{{ line }}</li>#}
+{#  {% empty %}#}
+{#  <li><h3>No data has been added yet!</h3></li>#}
+{#  {% endfor %}#}
+{#</ul>#}
 
-    <p>{{ user.username }} - here to show the first name</p>
-    <p>{{ user.username }} - here to show the last name</p>
-    <p>e-mail address</p>
-    <p>profile_id</p>
-    <p>alerts (yes/no tickbox)</p>
-    <p>Subscribe to newsletter? tickbox</p>
+    <p>FIRST NAME: {{ user_personal_data.first_name }}</p>
+    <p>LAST NAME: {{ user_personal_data.last_name }}</p>
+    <p>EMAIL: {{ user_personal_data.email }}</p>
+    <p>CONTACT NUMBER: {{ user_personal_data.contact_number }}</p>
+    <p>ID: {{ user_personal_data.id }}</p>
+    <p>ADDRESS LINE 1: {{ user_personal_data.address_line1 }}</p>
+    <p>ADDRESS LINE 2: {{ user_personal_data.address_line2 }}</p>
+    <p>ADDRESS LINE 3: {{ user_personal_data.address_line3 }}</p>
+    <p>CITY: {{ user_personal_data.address_city }}</p>
+    <p>COUNTY: {{ user_personal_data.address_county }}</p>
+    <p>POST CODE: {{ user_personal_data.address_post_code }}</p>
+    <p>COUNTRY: {{ user_personal_data.address_country }}</p>
+
+    {% if user_personal_data.alerts.value == True %}
+        <p>ALERTS: Yes</p>
+    {% else %}
+        <p>ALERTS: No</p>
+    {% endif %}
+
+    {% if user_personal_data.newsletter_selection.value == True %}
+        <p>NEWSLETTER: Yes</p>
+    {% else %}
+        <p>NEWSLETTER: No</p>
+    {% endif %}
+
     <p>picture on the right side</p>
+
     <a href="{% url 'learning_logs:reports' %}">Reports</a>
     <a href="{% url 'learning_logs:my_loans' %}">My Loans</a>
     <a href="{% url 'learning_logs:quotes' %}">Saved quotes</a><br><br>
+
     <p>Change password link or button</p>
 
 {% endblock content %}

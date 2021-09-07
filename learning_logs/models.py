@@ -33,7 +33,6 @@ class UserInformation(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
-    # contact_number = models.CharField(max_length=50)
     contact_number = PhoneNumberField(unique=True, null=False, blank=False)
     address_line1 = models.CharField(max_length=50)
     address_line2 = models.CharField(max_length=50, blank=True)
@@ -45,6 +44,8 @@ class UserInformation(models.Model):
     alerts = models.BooleanField(default=False)
     newsletter_selection = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
+    profile_picture = models.ImageField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "InfoUsers"

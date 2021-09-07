@@ -44,7 +44,7 @@
                     <a class="nav-link" href="{% url 'learning_logs:contact' %}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'learning_logs:my_space' %}">My account</a>
+                    <a class="nav-link" href="{% url 'learning_logs:my_space' user.id %}">My account</a>
                 </li>
                 <li class="nav-item">
                     <span class="navbar-text">Hello, {{ user.username }}.</span>

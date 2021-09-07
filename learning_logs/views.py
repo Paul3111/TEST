@@ -112,9 +112,15 @@ def about_us(request):
 
 
 @login_required()
-def my_space_view(request):
+def my_space_view(request, auth_user_id):
     """The profile page"""
-    return render(request, 'learning_logs/my_space.html')
+    # user_personal_data = UserInformation.objects.values_list
+    # user_personal_data = UserInformation.objects.get(owner=auth_user_id)
+    user_personal_data = UserInformation.objects.filter(owner=request.user)
+    if UserInformation.owner != request.user:
+        raise Http404
+    context = {'user_personal_data': user_personal_data}
+    return render(request, 'learning_logs/my_space.html', auth_user_id, context)
 
 
 @login_required()
@@ -165,17 +171,13 @@ def customer_details(request):
         #POST data submitted; process data.
         form = UserInformationForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            customer_details = form.save(commit=False)  # trying to link the data with the logged in user
+            customer_details.owner = request.User   # trying to link the data with the logged in user
+            customer_details.save()     # trying to link the data with the logged in user
+            # form.save()   # you only need to save the form, if data no linked to user
             return redirect('learning_logs:my_space')
 
     #Display a blank or invalid form.
     context = {'form': form}
     return render(request, 'learning_logs/customer_details.html', context)
 
-
-@login_required
-def user_personal_data(request):
-    """Show user's data on the my_space page"""
-    user_personal_data = UserInformation.objects.all()
-    context = {'user_personal_data': user_personal_data}
-    return render(request, 'learning_logs/my_space.html', context)

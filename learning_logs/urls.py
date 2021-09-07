@@ -24,7 +24,7 @@ urlpatterns = [
     #About us page.
     path('about_us/', views.about_us, name='about_us'),
     #Profile page.
-    path('my_space/', views.my_space_view, name='my_space'),
+    path('my_space/<int:auth_user_id>', views.my_space_view, name='my_space'),
     #Apply page.
     path('apply/', views.apply_loan, name='apply'),
     #Calculator page.
