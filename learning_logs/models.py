@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-# import phonenumber_field
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Topic(models.Model):
@@ -33,7 +33,8 @@ class UserInformation(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
-    contact_number = models.CharField(max_length=50)
+    # contact_number = models.CharField(max_length=50)
+    contact_number = PhoneNumberField(unique=True, null=False, blank=False)
     address_line1 = models.CharField(max_length=50)
     address_line2 = models.CharField(max_length=50, blank=True)
     address_line3 = models.CharField(max_length=50, blank=True)
@@ -41,7 +42,6 @@ class UserInformation(models.Model):
     address_county = models.CharField(max_length=50)
     address_post_code = models.CharField(max_length=50)
     address_country = models.CharField(max_length=50)
-    # user_id = UserInformation.objects.filter()
     alerts = models.BooleanField(default=False)
     newsletter_selection = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)

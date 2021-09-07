@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Topic, Entry
+from .models import Topic, Entry, UserInformation
 from .forms import TopicForm, EntryForm, UserInformationForm
 
 
@@ -112,7 +112,7 @@ def about_us(request):
 
 
 @login_required()
-def my_space(request):
+def my_space_view(request):
     """The profile page"""
     return render(request, 'learning_logs/my_space.html')
 
@@ -155,8 +155,9 @@ def my_quotes(request):
 
 
 @login_required()
-def user_details(request):
+def customer_details(request):
     """To allow users to enter and amend their personal data. When done, to redirect to my_space"""
+
     if request.method != 'POST':
         #No data submitted; create a blank form.
         form = UserInformationForm()
@@ -165,8 +166,16 @@ def user_details(request):
         form = UserInformationForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('learning_logs: my_space')
+            return redirect('learning_logs:my_space')
 
     #Display a blank or invalid form.
     context = {'form': form}
-    return render(request, 'learning_logs/user_details.html', context)
+    return render(request, 'learning_logs/customer_details.html', context)
+
+
+@login_required
+def user_personal_data(request):
+    """Show user's data on the my_space page"""
+    user_personal_data = UserInformation.objects.all()
+    context = {'user_personal_data': user_personal_data}
+    return render(request, 'learning_logs/my_space.html', context)

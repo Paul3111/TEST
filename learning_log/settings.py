@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap',
     'django_forms_bootstrap',
+    'phonenumber_field',
     # DEFAULT APPS:
     'django.contrib.admin',
     'django.contrib.auth',

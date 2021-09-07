@@ -4,11 +4,18 @@
 
     <p>PROFILE PAGE HERE!</p>
 
-    <a href="{% url 'learning_logs: user_details' %}">Complete your profile</a><br>
+    <a href="{% url 'learning_logs:customer_details' %}">Edit your personal details</a><br>
     <br>
 
+<ul>
+  {% for line in user_personal_data %}
+      <li>{{ line }}</li>
+  {% empty %}
+  <li><h3>No data has been added yet.</h3></li>
+  {% endfor %}
+</ul>
+
     <p>{{ user.username }} - here to show the first name</p>
-{#    <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>#}
     <p>{{ user.username }} - here to show the last name</p>
     <p>e-mail address</p>
     <p>profile_id</p>
@@ -19,7 +26,6 @@
     <a href="{% url 'learning_logs:my_loans' %}">My Loans</a>
     <a href="{% url 'learning_logs:quotes' %}">Saved quotes</a><br><br>
     <p>Change password link or button</p>
-
 
 {% endblock content %}
 
