@@ -13,7 +13,11 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+
+        <img src= "/photos/logo.jpg" alt="logo" width="40" height="40" >
+
         <a class="navbar-brand" href="{% url 'learning_logs:index' %}">Home Page</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -26,6 +30,7 @@
             <li class="nav-item">
             <a class="nav-link" href="{% url 'learning_logs:topics' %}">Learning Logs</a></li>
         </ul>
+
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -47,7 +52,7 @@
                     <a class="nav-link" href="{% url 'learning_logs:my_space' user.id %}">My account</a>
                 </li>
                 <li class="nav-item">
-                    <span class="navbar-text">Hello, {{ user.username }}.</span>
+                    <span class="navbar-text">Hello, {{ user.username.capitalize }}.</span>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:logout' %}">Log out</a>

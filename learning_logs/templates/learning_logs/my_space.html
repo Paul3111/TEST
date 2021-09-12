@@ -7,15 +7,7 @@
     <a href="{% url 'learning_logs:customer_details' %}">Edit your personal details</a><br>
     <br>
 
-{#<ul>#}
-{#  {% for line in user_personal_data %}#}
-{#      <li>{{ line }}</li>#}
-{#  {% empty %}#}
-{#  <li><h3>No data has been added yet!</h3></li>#}
-{#  {% endfor %}#}
-{#</ul>#}
-
-    <p>FIRST NAME: {{ user_personal_data.first_name }}</p>
+    <p>FIRST NAME: {{ user_personal_data.first_name }} </p>
     <p>LAST NAME: {{ user_personal_data.last_name }}</p>
     <p>EMAIL: {{ user_personal_data.email }}</p>
     <p>CONTACT NUMBER: {{ user_personal_data.contact_number }}</p>
@@ -40,7 +32,10 @@
         <p>NEWSLETTER: No</p>
     {% endif %}
 
-    <p>picture on the right side</p>
+{#    <img src= "/my_space/{{ user_personal_data.id }}/photos/daniela.jpg" alt="profile picture"><br>#}
+    <img src= "/photos/daniela.jpg" alt="profile picture"><br>
+{#    <img src= "{{ MEDIA_URL }} {{ daniela.jpg }}" alt="picture not found" width="500" height="600"/><br><br>#}
+    <img src={{ user_personal_data.profile_picture }}, alt="profile picture not found" width="500" height="600"><br><br>
 
     <a href="{% url 'learning_logs:reports' %}">Reports</a>
     <a href="{% url 'learning_logs:my_loans' %}">My Loans</a>

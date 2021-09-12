@@ -114,13 +114,17 @@ def about_us(request):
 @login_required()
 def my_space_view(request, auth_user_id):
     """The profile page"""
-    # user_personal_data = UserInformation.objects.values_list
-    # user_personal_data = UserInformation.objects.get(owner=auth_user_id)
-    user_personal_data = UserInformation.objects.filter(owner=request.user)
-    if UserInformation.owner != request.user:
+    # user_personal_data = UserInformation.objects.filter(owner=auth_user_id)
+    user_personal_data = UserInformation.objects.get(owner=auth_user_id)
+    if UserInformation.objects.get(id=auth_user_id).owner != request.user:
         raise Http404
     context = {'user_personal_data': user_personal_data}
-    return render(request, 'learning_logs/my_space.html', auth_user_id, context)
+    return render(request, 'learning_logs/my_space.html', context)
+
+
+# def test(request):
+#     img = Photo.objects.all().order_by('-id')
+#     return render_to_response("my_space.html", {"img": img})
 
 
 @login_required()
@@ -172,10 +176,10 @@ def customer_details(request):
         form = UserInformationForm(data=request.POST)
         if form.is_valid():
             customer_details = form.save(commit=False)  # trying to link the data with the logged in user
-            customer_details.owner = request.User   # trying to link the data with the logged in user
+            customer_details.owner = request.user   # trying to link the data with the logged in user
             customer_details.save()     # trying to link the data with the logged in user
             # form.save()   # you only need to save the form, if data no linked to user
-            return redirect('learning_logs:my_space')
+            return redirect('learning_logs:my_space/')
 
     #Display a blank or invalid form.
     context = {'form': form}

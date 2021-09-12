@@ -44,12 +44,13 @@ class UserInformation(models.Model):
     alerts = models.BooleanField(default=False)
     newsletter_selection = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    profile_picture = models.ImageField()
+    profile_picture = models.ImageField(upload_to='photos')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "InfoUsers"
 
     def __str__(self):
-        """To display these fields in the admin panel"""
-        return f"{self.first_name} {self.last_name} - {self.email}. Added on: {self.date_created}"
+        """To display these fields in the admin panel and make them available for html template"""
+        return f"{self.first_name} {self.last_name} - {self.email}. Added on: {self.date_created} {self.owner}"
+

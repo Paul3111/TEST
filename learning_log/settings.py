@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,9 +36,6 @@ INSTALLED_APPS = [
     'users',
     #THIRD PARTY APPS:
     'bootstrap4',
-    'bootstrap',
-    'django_forms_bootstrap',
-    'phonenumber_field',
     # DEFAULT APPS:
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,3 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #My settings
 LOGIN_URL = 'users:login'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
+MEDIA_URL = '/photos/'

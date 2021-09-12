@@ -1,6 +1,6 @@
 {% extends 'learning_logs/base.html' %}
 {% block content %}
-    <a href="{% url 'learning_logs:my_space' %}">Back to account overview</a>
+    <a href="{% url 'learning_logs:my_space' user.id %}">Back to account overview</a>
 
     <h1>The user's loans and additional information (monthly repayment, term etc</h1>
 

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <a href="{% url 'learning_logs:my_space' %}">Back to account overview</a>
+    <a href="{% url 'learning_logs:my_space' user.id %}">Back to account overview</a>
 
     <h1>List with reports to generate</h1>
     <h1>Show a pie chart with the user's loan (principal, interest, monthly repayment)</h1>
