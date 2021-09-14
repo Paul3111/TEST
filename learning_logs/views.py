@@ -107,10 +107,10 @@ def contact_form(request, auth_user_id):
         raise Http404
 
     form = CustomerMessageForm(data=request.POST)
-    # form = CustomerMessageForm (use_required_attribute=False) # not working...
+    # form = CustomerMessageForm (use_required_attribute=False) # not working to remove the "description labels"...
     if form.is_valid():
         contact_form = form.save(commit=False)
-        contact_form.auth_user_id = request.user.id
+        contact_form.owner = request.user.id
         contact_form.save()
         return redirect(f'/contact/')
     context = {'form': form}
@@ -163,9 +163,9 @@ def my_reports(request):
 @login_required()
 def my_messages(request, auth_user_id):
     """To display saved messages"""
-    user_messages = CustomerMessage.objects.get(id=request.user.id)
+    user_messages = CustomerMessage.objects.filter(owner=auth_user_id)
 
-    if CustomerMessage.objects.get(id=auth_user_id).id != request.user.id:
+    if auth_user_id != request.user.id:
         raise Http404
 
     context = {'user_messages': user_messages}

@@ -60,7 +60,9 @@ class CustomerMessage(models.Model):
     customer_message_subject = models.TextField(max_length=200)
     customer_message = models.TextField(max_length=1000)
     date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         """Return a string representation of the model."""
-        return f"{self.customer_message_subject[:20]}... ||| {self.customer_message[:50]}..."
+        return f"Date: {self.date_added}. Subject: {self.customer_message_subject[:50]}." \
+               f" Message: {self.customer_message[:50]}[...]."
