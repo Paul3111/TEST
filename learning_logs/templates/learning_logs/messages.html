@@ -6,19 +6,19 @@
 
     <h1>MY MESSAGES</h1>
 
-    {% if not CustomerMessages %}
+{#    {% if not user_messages %}#}
+{##}
+{#        <p>You have no messages!</p>#}
+{##}
+{#    {% else %}#}
+{##}
+{#        {% for message in user_messages %}#}
 
-        <p>You have no messages!</p>
+            <ul>{{ user_messages.customer_message_subject }} </ul>
+            <ul>{{ user_messages.customer_message }}</ul>
+            <ul>{{ user_messages.date_added }}</ul>
 
-    {% else %}
+{#        {% endfor %}#}
 
-        {% for message in CustomerMessages %}
-
-            <ul>{{ CustomerMessages.customer_message_subject }} </ul>
-            <ul>{{ CustomerMessages.customerMessages }}</ul>
-            <ul>{{ CustomerMessages.date_added }}</ul>
-
-        {% endfor %}
-
-    {% endif %}
+{#    {% endif %}#}
 {% endblock content %}

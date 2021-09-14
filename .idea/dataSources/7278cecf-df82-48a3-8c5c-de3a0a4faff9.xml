@@ -1786,19 +1786,19 @@ model</ColNames>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="590" parent="180" name="customer_message_subject">
+    <column id="590" parent="180" name="customer_message">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="591" parent="180" name="customer_message">
+    <column id="591" parent="180" name="date_added">
       <Position>3</Position>
-      <DataType>text|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="592" parent="180" name="date_added">
+    <column id="592" parent="180" name="customer_message_subject">
       <Position>4</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="593" parent="180">

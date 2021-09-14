@@ -4,7 +4,8 @@
 
     <a href="{% url 'learning_logs:contact' %}">Back to contact details page</a>
 
-    <h1>Send us a message below</h1>
+    <h1>Send us a message by filling the form below</h1>
+    <br>
 
     <form action="{% url 'learning_logs:contact_form' request.user.id %}" method='post'>
         {% csrf_token %}

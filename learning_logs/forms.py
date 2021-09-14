@@ -30,3 +30,6 @@ class CustomerMessageForm(forms.ModelForm):
     class Meta:
         model = CustomerMessage
         fields = '__all__'
+        labels = {'customer_message_subject': 'Subject', 'customer_message': 'Message'}
+        widgets = {'customer_message_subject': forms.Textarea(attrs={'cols': 60, 'rows': 1}),
+                   'customer_message': forms.Textarea(attrs={'cols': 60, 'rows': 5})}

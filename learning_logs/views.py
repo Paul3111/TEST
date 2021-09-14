@@ -101,9 +101,20 @@ def contact(request):
 
 
 @login_required()
-def contact_form(request):
-    """The contact form."""
-    return render(request, 'learning_logs/contact_form.html')
+def contact_form(request, auth_user_id):
+    """To send messages"""
+    if auth_user_id != request.user.id:
+        raise Http404
+
+    form = CustomerMessageForm(data=request.POST)
+    # form = CustomerMessageForm (use_required_attribute=False) # not working...
+    if form.is_valid():
+        contact_form = form.save(commit=False)
+        contact_form.auth_user_id = request.user.id
+        contact_form.save()
+        return redirect(f'/contact/')
+    context = {'form': form}
+    return render(request, 'learning_logs/contact_form.html', context)
 
 
 def about_us(request):
@@ -152,39 +163,13 @@ def my_reports(request):
 @login_required()
 def my_messages(request, auth_user_id):
     """To display saved messages"""
-    user_messages = CustomerMessage.objects.filter(id=auth_user_id)
+    user_messages = CustomerMessage.objects.get(id=request.user.id)
 
-    if auth_user_id != request.user.id:
+    if CustomerMessage.objects.get(id=auth_user_id).id != request.user.id:
         raise Http404
 
-    if len(user_messages) == 0:
-        # Have to use this when there are no initial messages
-        CustomerMessageForm(data=request.POST)
-    else:
-        form = CustomerMessageForm(data=request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            my_messages = request.user
-            my_messages.save()
-            return redirect(f'/my_space/{customer_details.id}/')
     context = {'user_messages': user_messages}
     return render(request, 'learning_logs/messages.html', context)
-
-
-@login_required()
-def send_message(request, auth_user_id):
-    """To send messages"""
-    if auth_user_id != request.user.id or request.method == 'GET':
-        raise Http404
-
-    form = CustomerMessageForm(data=request.POST)
-    if form.is_valid():
-        form.save(commit=False)
-        send_message = request.user
-        send_message.save()
-        return redirect(f'/contact/')
-    context = {'form': form}
-    return render(request, 'learning_logs/contact_form.html', context)
 
 
 @login_required()
