@@ -4,8 +4,10 @@
 
     <p>PROFILE</p>
 
-    <a href="{% url 'learning_logs:customer_details' %}">Edit your personal details</a><br>
+    <a href="{% url 'learning_logs:customer_details' request.user.id %}">Edit your personal details</a><br>
     <br>
+
+    <p>Change password link or button on the right side</p>
 
     <p>FIRST NAME: {{ user_personal_data.first_name }} </p>
     <p>LAST NAME: {{ user_personal_data.last_name }}</p>
@@ -32,16 +34,11 @@
         <p>NEWSLETTER: No</p>
     {% endif %}
 
-{#    <img src= "/my_space/{{ user_personal_data.id }}/photos/daniela.jpg" alt="profile picture"><br>#}
-    <img src= "/photos/daniela.jpg" alt="profile picture"><br>
-{#    <img src= "{{ MEDIA_URL }} {{ daniela.jpg }}" alt="picture not found" width="500" height="600"/><br><br>#}
-    <img src={{ user_personal_data.profile_picture }}, alt="profile picture not found" width="500" height="600"><br><br>
+    <img src="/{{ user_personal_data.profile_picture }}" alt="Profile picture missing" width="160" height="170" ><br><br>
 
     <a href="{% url 'learning_logs:reports' %}">Reports</a>
     <a href="{% url 'learning_logs:my_loans' %}">My Loans</a>
-    <a href="{% url 'learning_logs:quotes' %}">Saved quotes</a><br><br>
-
-    <p>Change password link or button</p>
+    <a href="{% url 'learning_logs:messages' request.user.id %}">My Messages</a><br><br>
 
 {% endblock content %}
 

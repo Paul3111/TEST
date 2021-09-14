@@ -19,7 +19,7 @@
     <p>42007</p>
 {#add image - map, box to send message/contact form! after you press a button#}
 
-<a href="{% url 'learning_logs:contact_form' %}">Send us a message (you must be logged in)</a>
+<a href="{% url 'learning_logs:contact_form' request.user.id %}">Send us a message (you must be logged in)</a>
 
 </body>
 

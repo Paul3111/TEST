@@ -1,0 +1,24 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+    <a href="{% url 'learning_logs:my_space' request.user.id %}">Back to my account</a>
+
+    <h1>MY MESSAGES</h1>
+
+    {% if not CustomerMessages %}
+
+        <p>You have no messages!</p>
+
+    {% else %}
+
+        {% for message in CustomerMessages %}
+
+            <ul>{{ CustomerMessages.customer_message_subject }} </ul>
+            <ul>{{ CustomerMessages.customerMessages }}</ul>
+            <ul>{{ CustomerMessages.date_added }}</ul>
+
+        {% endfor %}
+
+    {% endif %}
+{% endblock content %}

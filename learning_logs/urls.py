@@ -20,7 +20,7 @@ urlpatterns = [
     #Contact details page.
     path('contact/', views.contact, name='contact'),
     #Contact form.
-    path('contact_form/', views.contact_form, name='contact_form'),
+    path('contact_form/<int:auth_user_id>/', views.contact_form, name='contact_form'),
     #About us page.
     path('about_us/', views.about_us, name='about_us'),
     #Profile page.
@@ -35,8 +35,8 @@ urlpatterns = [
     path('my_loans/', views.my_loans, name='my_loans'),
     #Reports page.
     path('reports/', views.my_reports, name='reports'),
-    #Quotes page.
-    path('quotes/', views.my_quotes, name='quotes'),
+    #Messages page.
+    path('messages/<int:auth_user_id>/', views.my_messages, name='messages'),
     #Page to allow registered users to add their information
-    path('customer_details/', views.customer_details, name='customer_details'),
+    path('customer_details/<int:auth_user_id>/', views.customer_details, name='customer_details'),
 ]

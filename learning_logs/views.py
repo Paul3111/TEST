@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Topic, Entry, UserInformation
-from .forms import TopicForm, EntryForm, UserInformationForm
+from .models import Topic, Entry, UserInformation, CustomerMessage
+from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm
 
 
 def index(request):
@@ -114,17 +114,11 @@ def about_us(request):
 @login_required()
 def my_space_view(request, auth_user_id):
     """The profile page"""
-    # user_personal_data = UserInformation.objects.filter(owner=auth_user_id)
     user_personal_data = UserInformation.objects.get(owner=auth_user_id)
     if UserInformation.objects.get(id=auth_user_id).owner != request.user:
         raise Http404
     context = {'user_personal_data': user_personal_data}
     return render(request, 'learning_logs/my_space.html', context)
-
-
-# def test(request):
-#     img = Photo.objects.all().order_by('-id')
-#     return render_to_response("my_space.html", {"img": img})
 
 
 @login_required()
@@ -144,42 +138,75 @@ def loans_display(request):
 
 
 @login_required()
-#to use user's id?
 def my_loans(request):
     """This page displays a user's loans and additional information"""
     return render(request, 'learning_logs/my_loans.html')
 
 
 @login_required()
-#to use user's id
 def my_reports(request):
     """To allow the user to display reports and to view charts"""
     return render(request, 'learning_logs/reports.html')
 
 
 @login_required()
-#to use user's id
-def my_quotes(request):
-    """To display saved quotes"""
-    return render(request, 'learning_logs/quotes.html')
+def my_messages(request, auth_user_id):
+    """To display saved messages"""
+    user_messages = CustomerMessage.objects.filter(id=auth_user_id)
+
+    if auth_user_id != request.user.id:
+        raise Http404
+
+    if len(user_messages) == 0:
+        # Have to use this when there are no initial messages
+        CustomerMessageForm(data=request.POST)
+    else:
+        form = CustomerMessageForm(data=request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            my_messages = request.user
+            my_messages.save()
+            return redirect(f'/my_space/{customer_details.id}/')
+    context = {'user_messages': user_messages}
+    return render(request, 'learning_logs/messages.html', context)
 
 
 @login_required()
-def customer_details(request):
+def send_message(request, auth_user_id):
+    """To send messages"""
+    if auth_user_id != request.user.id or request.method == 'GET':
+        raise Http404
+
+    form = CustomerMessageForm(data=request.POST)
+    if form.is_valid():
+        form.save(commit=False)
+        send_message = request.user
+        send_message.save()
+        return redirect(f'/contact/')
+    context = {'form': form}
+    return render(request, 'learning_logs/contact_form.html', context)
+
+
+@login_required()
+def customer_details(request, auth_user_id):
     """To allow users to enter and amend their personal data. When done, to redirect to my_space"""
+    existing_data = UserInformation.objects.get(owner=auth_user_id)
+
+    if UserInformation.objects.get(id=auth_user_id).owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
-        #No data submitted; create a blank form.
-        form = UserInformationForm()
+        #No data submitted; create a blank form and fetch existing data.
+        form = UserInformationForm(instance=existing_data)
     else:
         #POST data submitted; process data.
-        form = UserInformationForm(data=request.POST)
+        form = UserInformationForm(instance=existing_data, data=request.POST)
         if form.is_valid():
-            customer_details = form.save(commit=False)  # trying to link the data with the logged in user
-            customer_details.owner = request.user   # trying to link the data with the logged in user
-            customer_details.save()     # trying to link the data with the logged in user
-            # form.save()   # you only need to save the form, if data no linked to user
-            return redirect('learning_logs:my_space/')
+            customer_details = form.save(commit=False)
+            customer_details.owner = request.user
+            customer_details.save()
+            # form.save()
+            return redirect(f'/my_space/{customer_details.id}/')
 
     #Display a blank or invalid form.
     context = {'form': form}

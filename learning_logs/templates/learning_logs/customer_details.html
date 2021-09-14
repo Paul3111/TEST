@@ -2,14 +2,14 @@
 
 {% block content %}
 
-    <p>Add or amend your personal details</p>
+    <p>Amend your personal details</p>
 
-    <form action="{% url 'learning_logs:customer_details' %}" method='post'>
+    <form action="{% url 'learning_logs:customer_details' request.user.id %}" method='post'>
             {% csrf_token %}
             {{ form.as_p }}
         <button name="submit">Save details</button>
     </form>
     <br>
-    <a href="{% url 'learning_logs:my_space' user.id %}">Go back</a>
+    <a href="{% url 'learning_logs:my_space' request.user.id %}">Go back</a>
 
 {% endblock content %}
