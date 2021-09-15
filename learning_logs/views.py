@@ -107,10 +107,10 @@ def contact_form(request, auth_user_id):
         raise Http404
 
     form = CustomerMessageForm(data=request.POST)
-    # form = CustomerMessageForm (use_required_attribute=False) # not working to remove the "description labels"...
+    # form = CustomerMessageForm (use_required_attribute=False) # not working to remove the "This field is required"...
     if form.is_valid():
         contact_form = form.save(commit=False)
-        contact_form.owner = request.user.id
+        contact_form.owner = request.user
         contact_form.save()
         return redirect(f'/contact/')
     context = {'form': form}
