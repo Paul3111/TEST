@@ -39,4 +39,6 @@ urlpatterns = [
     path('messages/<int:auth_user_id>/', views.my_messages, name='messages'),
     #Page to allow registered users to add their information
     path('customer_details/<int:auth_user_id>/', views.customer_details, name='customer_details'),
+    #Page that displays an individual message so the user can read it
+    path('read_message/<int:message_id>/', views.read_message, name='read_message'),
 ]

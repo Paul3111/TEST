@@ -64,5 +64,4 @@ class CustomerMessage(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return f"Date: {self.date_added}. Subject: {self.customer_message_subject[:50]}." \
-               f" Message: {self.customer_message[:50]}[...]."
+        return f"{self.customer_message_subject[:50]} {self.date_added})"

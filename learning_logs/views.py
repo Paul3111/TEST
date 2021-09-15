@@ -125,9 +125,12 @@ def about_us(request):
 @login_required()
 def my_space_view(request, auth_user_id):
     """The profile page"""
+    # try:
     user_personal_data = UserInformation.objects.get(owner=auth_user_id)
     if UserInformation.objects.get(id=auth_user_id).owner != request.user:
         raise Http404
+    # except DoesNotExist:
+    #     return redirect()
     context = {'user_personal_data': user_personal_data}
     return render(request, 'learning_logs/my_space.html', context)
 
@@ -197,3 +200,14 @@ def customer_details(request, auth_user_id):
     context = {'form': form}
     return render(request, 'learning_logs/customer_details.html', context)
 
+
+@login_required()
+def read_message(request, message_id):
+    """Show each message"""
+    message = CustomerMessage.objects.get(id=message_id)
+
+    if message.owner != request.user:
+        raise Http404
+
+    context = {'message': message}
+    return render(request, 'learning_logs/read_message.html', context)

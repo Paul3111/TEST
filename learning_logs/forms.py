@@ -29,7 +29,8 @@ class UserInformationForm(forms.ModelForm):
 class CustomerMessageForm(forms.ModelForm):
     class Meta:
         model = CustomerMessage
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ('customer_message_subject', 'customer_message')
         labels = {'customer_message_subject': 'Subject', 'customer_message': 'Message'}
         widgets = {'customer_message_subject': forms.Textarea(attrs={'cols': 60, 'rows': 1}),
                    'customer_message': forms.Textarea(attrs={'cols': 60, 'rows': 5})}

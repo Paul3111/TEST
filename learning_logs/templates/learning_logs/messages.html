@@ -14,9 +14,13 @@
 
         {% for message in user_messages %}
 
-            <ul>{{ message }} </ul>
+            <li><h3>
+                <a href="{% url 'learning_logs:read_message' message.id %}">{{ message.customer_message_subject }} (sent on
+                    {{ message.date_added|date:'M d,Y H:i' }})</a>
+            </h3></li>
 
         {% endfor %}
 
     {% endif %}
+
 {% endblock content %}
