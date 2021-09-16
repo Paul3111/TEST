@@ -41,4 +41,6 @@ urlpatterns = [
     path('customer_details/<int:auth_user_id>/', views.customer_details, name='customer_details'),
     #Page that displays an individual message so the user can read it
     path('read_message/<int:message_id>/', views.read_message, name='read_message'),
+    #Used for the application form file so it can be downloaded
+    path('<str:loan_documents>/', views.download_application_form),
 ]

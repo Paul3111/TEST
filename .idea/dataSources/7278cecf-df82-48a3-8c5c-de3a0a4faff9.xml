@@ -1786,231 +1786,247 @@ model</ColNames>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="590" parent="180" name="customer_message">
+    <column id="590" parent="180" name="customer_message_subject">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="591" parent="180" name="date_added">
+    <column id="591" parent="180" name="customer_message">
       <Position>3</Position>
-      <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="592" parent="180" name="customer_message_subject">
-      <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="593" parent="180">
+    <column id="592" parent="180" name="date_added">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="593" parent="180" name="owner_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="594" parent="180" name="learning_logs_customermessage_owner_id_5a20b043">
+      <ColNames>owner_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="595" parent="180">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="594" parent="181" name="id">
+    <foreign-key id="596" parent="180">
+      <ColNames>owner_id</ColNames>
+      <RefTableName>auth_user</RefTableName>
+      <RefColNames>id</RefColNames>
+      <Deferrable>1</Deferrable>
+      <InitiallyDeferred>1</InitiallyDeferred>
+    </foreign-key>
+    <column id="597" parent="181" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="595" parent="181" name="text">
+    <column id="598" parent="181" name="text">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="596" parent="181" name="date_added">
+    <column id="599" parent="181" name="date_added">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="597" parent="181" name="topic_id">
+    <column id="600" parent="181" name="topic_id">
       <Position>4</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="598" parent="181" name="learning_logs_entry_topic_id_83697a9a">
+    <index id="601" parent="181" name="learning_logs_entry_topic_id_83697a9a">
       <ColNames>topic_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="599" parent="181">
+    <key id="602" parent="181">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="600" parent="181">
+    <foreign-key id="603" parent="181">
       <ColNames>topic_id</ColNames>
       <RefTableName>learning_logs_topic</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="601" parent="182" name="id">
+    <column id="604" parent="182" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="602" parent="182" name="text">
+    <column id="605" parent="182" name="text">
       <Position>2</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="603" parent="182" name="date_added">
+    <column id="606" parent="182" name="date_added">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="604" parent="182" name="owner_id">
+    <column id="607" parent="182" name="owner_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="605" parent="182" name="learning_logs_topic_owner_id_67ecce32">
+    <index id="608" parent="182" name="learning_logs_topic_owner_id_67ecce32">
       <ColNames>owner_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="606" parent="182">
+    <key id="609" parent="182">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="607" parent="182">
+    <foreign-key id="610" parent="182">
       <ColNames>owner_id</ColNames>
       <RefTableName>auth_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="608" parent="183" name="id">
+    <column id="611" parent="183" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="609" parent="183" name="first_name">
+    <column id="612" parent="183" name="first_name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="610" parent="183" name="last_name">
+    <column id="613" parent="183" name="last_name">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="611" parent="183" name="email">
+    <column id="614" parent="183" name="email">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="612" parent="183" name="contact_number">
+    <column id="615" parent="183" name="contact_number">
       <Position>5</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="613" parent="183" name="address_line1">
+    <column id="616" parent="183" name="address_line1">
       <Position>6</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="614" parent="183" name="address_line2">
+    <column id="617" parent="183" name="address_line2">
       <Position>7</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="615" parent="183" name="address_line3">
+    <column id="618" parent="183" name="address_line3">
       <Position>8</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="616" parent="183" name="address_city">
+    <column id="619" parent="183" name="address_city">
       <Position>9</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="617" parent="183" name="address_post_code">
+    <column id="620" parent="183" name="address_post_code">
       <Position>10</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="618" parent="183" name="address_country">
+    <column id="621" parent="183" name="address_country">
       <Position>11</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="619" parent="183" name="alerts">
+    <column id="622" parent="183" name="alerts">
       <Position>12</Position>
       <DataType>bool|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="620" parent="183" name="date_created">
+    <column id="623" parent="183" name="date_created">
       <Position>13</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="621" parent="183" name="address_county">
+    <column id="624" parent="183" name="address_county">
       <Position>14</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="622" parent="183" name="owner_id">
+    <column id="625" parent="183" name="owner_id">
       <Position>15</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="623" parent="183" name="newsletter">
+    <column id="626" parent="183" name="newsletter">
       <Position>16</Position>
       <DataType>bool|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="624" parent="183" name="profile_picture">
+    <column id="627" parent="183" name="profile_picture">
       <Position>17</Position>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <index id="625" parent="183" name="sqlite_autoindex_learning_logs_userinformation_1">
+    <index id="628" parent="183" name="sqlite_autoindex_learning_logs_userinformation_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>contact_number</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <index id="626" parent="183" name="learning_logs_userinformation_owner_id_3e4d28cd">
+    <index id="629" parent="183" name="learning_logs_userinformation_owner_id_3e4d28cd">
       <ColNames>owner_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="627" parent="183">
+    <key id="630" parent="183">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="628" parent="183">
+    <key id="631" parent="183">
       <ColNames>contact_number</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_learning_logs_userinformation_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="629" parent="183">
+    <foreign-key id="632" parent="183">
       <ColNames>owner_id</ColNames>
       <RefTableName>auth_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="630" parent="184" name="type">
+    <column id="633" parent="184" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="631" parent="184" name="name">
+    <column id="634" parent="184" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="632" parent="184" name="tbl_name">
+    <column id="635" parent="184" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="633" parent="184" name="rootpage">
+    <column id="636" parent="184" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="634" parent="184" name="sql">
+    <column id="637" parent="184" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="635" parent="185" name="name">
+    <column id="638" parent="185" name="name">
       <Position>1</Position>
     </column>
-    <column id="636" parent="185" name="seq">
+    <column id="639" parent="185" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

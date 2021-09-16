@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from .models import Topic, Entry, UserInformation, CustomerMessage
 from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm
+import mimetypes
 
 
 def index(request):
@@ -106,15 +107,17 @@ def contact_form(request, auth_user_id):
     if auth_user_id != request.user.id:
         raise Http404
 
-    form = CustomerMessageForm(data=request.POST)
-    # form = CustomerMessageForm (use_required_attribute=False) # not working to remove the "This field is required"...
-    if form.is_valid():
-        contact_form = form.save(commit=False)
-        contact_form.owner = request.user
-        contact_form.save()
-        return redirect(f'/contact/')
-    context = {'form': form}
-    return render(request, 'learning_logs/contact_form.html', context)
+    if request.method == 'POST':
+        form = CustomerMessageForm(data=request.POST)
+        # form = CustomerMessageForm (use_required_attribute=False) # not working to remove the "This field is required"...
+        if form.is_valid():
+            contact_form = form.save(commit=False)
+            contact_form.owner = request.user
+            contact_form.save()
+            return redirect(f'/contact/')
+        context = {'form': form}
+        return render(request, 'learning_logs/contact_form.html', context)
+    return render(request, 'learning_logs/contact_form.html', {'form': CustomerMessageForm()})
 
 
 def about_us(request):
@@ -139,6 +142,19 @@ def my_space_view(request, auth_user_id):
 def apply_loan(request):
     """The page where you can apply for a loan"""
     return render(request, 'learning_logs/apply.html')
+
+
+def download_application_form(request):
+    """Used to allow the user to download forms"""
+    la_file_path = '/loan_documents'
+    filename = 'ApplicationForm.docx'
+
+    file = open(la_file_path, 'r')
+    mime_type, _ = mimetypes.guess_type(la_file_path)
+    response = HttpResponse(file, content_type=mime_type)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    # return response
+    return render(response, 'learning_logs/apply.html', request)
 
 
 def loan_calculator(request):

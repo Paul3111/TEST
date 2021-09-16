@@ -3,13 +3,17 @@
 {% block content %}
 
     <a href="{% url 'learning_logs:contact' %}">Back to contact details page</a>
-
+    <br><br>
     <h1>Send us a message by filling the form below</h1>
     <br>
 
-    <form action="{% url 'learning_logs:contact_form' request.user.id %}" method='post'>
+    <form action="" method='post'>
         {% csrf_token %}
-        {{ form.as_p }}
+        {%  for field in form %}
+            {{ field.label }} {{ field }} <br> {{ field.errors }}
+            <br>
+        {%  endfor %}
+    <br>
         <button name="submit">Send message</button>
     </form>
     <br>

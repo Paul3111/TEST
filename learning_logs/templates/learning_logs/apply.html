@@ -3,18 +3,33 @@
 {% block content %}
 
     <div>
-        <a>Apply online</a>
+        <h2>APPLY ONLINE</h2>
             <p>Form that allows to upload documents and save applicant data (csrf token)</p>
+            <p>If not a registered account, save the date in another table</p>
     </div>
 
     <div>
-        <a>Apply by post</a>
-            <p>Documents needed (list)</p>
-        <a>Download forms</a>
+        <h2>APPLY BY POST OR VISIT OUR BRANCH</h2>
+
+            <p>Required documents</p>
+        <ul>
+            <li>Passport or National ID card</li>
+            <li>Application Form</li>
+{#                <a href="/loan_documents/ApplicationForm.docx" download="application form">Download</a>#}
+                <a href="/loan_documents/ApplicationForm.docx" download rel="noopener noreferrer" target="_blank">Download</a>
+            <li>CRB check</li>
+            <li>Scoring</li>
+            <li>Proof of address</li>
+            <li>Utility bills</li>
+        </ul>
+        <a>Download forms, add "download buttons" next to each document</a>
     </div>
 
     <div>
-        <a>Read our Terms & Conditions</a>
+        <h4>You can read our Terms & Conditions here</h4>
     </div>
+
+    {{ download_application_form }}
+    <a {{ download_application_form }}></a>
 
 {% endblock content %}
