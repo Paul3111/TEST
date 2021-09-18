@@ -148,16 +148,17 @@ def download_application_form(request):
     return render(request, 'learning_logs/apply.html')
 
 
+@login_required
 def apply_loan(request, auth_user_id):
     """Used to enter data and apply online"""
     if auth_user_id != request.user.id:
         raise Http404
-    print(request.user.id)
+
     if request.method == 'POST':
         form = LoanApplicationForm(data=request.POST)
         if form.is_valid():
             apply_loan = form.save(commit=False)
-            apply_loan.owner = request.user.id
+            apply_loan.owner = request.user
             apply_loan.save()
             return redirect(f'/my_space/{auth_user_id}/')
         context = {'form': form}

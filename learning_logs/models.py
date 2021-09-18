@@ -75,7 +75,7 @@ purpose_list = (('Home improvements', 'Home improvements'), ('Debt consolidation
                 ('Buy property', 'Buy property'), ('Buy land', 'Buy land'),
                 ('Buy property with land', 'Buy property with land'), ('Other', 'Other'),)
 
-term_list = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10))
+term_list = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'))
 
 marital_list = (('Married', 'Married'), ('Divorced', 'Divorced'), ('Single', 'Single'),
                 ('Co-habituating', 'Co-habituating'), ('Widowed', 'Widowed'),
@@ -96,7 +96,7 @@ class LoanApplication(models.Model):
     loan_purpose = models.CharField(max_length=100, choices=purpose_list, default="")
     loan_amount = MoneyField(decimal_places=4, default_currency='GBP', max_digits=11)
     loan_term = models.CharField(max_length=100, choices=term_list)
-    date_of_birth = models.DateField(max_length=10, null=False, blank=False)
+    date_of_birth = models.DateField(max_length=10)
     # date_of_birth = models.DateField(max_length=8, input_formats=settings.DATE_INPUT_FORMAT)
     marital_status = models.CharField(max_length=100, choices=marital_list, default="")
     children = models.IntegerField(default=0, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)])
