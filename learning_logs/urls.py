@@ -34,7 +34,7 @@ urlpatterns = [
     #Display loans page
     path('loans/', views.loans_display, name='loans'),
     #My loans page.
-    path('my_loans/', views.my_loans, name='my_loans'),
+    path('my_loans/<int:auth_user_id>/', views.my_loans, name='my_loans'),
     #Reports page.
     path('reports/', views.my_reports, name='reports'),
     #Messages page.

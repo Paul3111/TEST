@@ -177,9 +177,15 @@ def loans_display(request):
 
 
 @login_required()
-def my_loans(request):
+def my_loans(request, auth_user_id):
     """This page displays a user's loans and additional information"""
-    return render(request, 'learning_logs/my_loans.html')
+    user_loans = LoanApplication.objects.filter(owner=auth_user_id)
+
+    if auth_user_id != request.user.id:
+        raise Http404
+
+    context = {'user_loans': user_loans}
+    return render(request, 'learning_logs/my_loans.html', context)
 
 
 @login_required()
