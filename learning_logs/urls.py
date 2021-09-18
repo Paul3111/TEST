@@ -26,7 +26,9 @@ urlpatterns = [
     #Profile page.
     path('my_space/<int:auth_user_id>/', views.my_space_view, name='my_space'),
     #Apply page.
-    path('apply/', views.apply_loan, name='apply'),
+    path('apply/', views.download_application_form, name='apply'),
+    #Apply online page
+    path('apply_online/<int:auth_user_id>/', views.apply_loan, name='apply_online'),
     #Calculator page.
     path('calculator/', views.loan_calculator, name='calculator'),
     #Display loans page
@@ -41,6 +43,4 @@ urlpatterns = [
     path('customer_details/<int:auth_user_id>/', views.customer_details, name='customer_details'),
     #Page that displays an individual message so the user can read it
     path('read_message/<int:message_id>/', views.read_message, name='read_message'),
-    #Used for the application form file so it can be downloaded
-    path('<str:loan_documents>/', views.download_application_form),
 ]

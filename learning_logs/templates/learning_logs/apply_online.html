@@ -1,0 +1,26 @@
+{%  extends 'learning_logs/base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Apply Online</title>
+</head>
+<body>
+
+{% block content %}
+
+    <form action="{% url 'learning_logs:apply_online' request.user.id %}" method='post'>
+            {% csrf_token %}
+        {%  for field in form %}
+            {{ field.label }} {{ field }}
+            <br>
+        {%  endfor %}
+    <br>
+        <button name="submit">Send application for review</button>
+    </form>
+
+    <br>
+    <a href="{% url 'learning_logs:apply' %}">Go back</a>
+
+{% endblock content %}
+
+</body>

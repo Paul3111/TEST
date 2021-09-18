@@ -1,8 +1,9 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
-from .models import Topic, Entry, UserInformation, CustomerMessage
-from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm
+from .models import Topic, Entry, UserInformation, CustomerMessage, LoanApplication
+from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm, LoanApplicationForm
 import mimetypes
 
 
@@ -109,7 +110,6 @@ def contact_form(request, auth_user_id):
 
     if request.method == 'POST':
         form = CustomerMessageForm(data=request.POST)
-        # form = CustomerMessageForm (use_required_attribute=False) # not working to remove the "This field is required"...
         if form.is_valid():
             contact_form = form.save(commit=False)
             contact_form.owner = request.user
@@ -128,33 +128,41 @@ def about_us(request):
 @login_required()
 def my_space_view(request, auth_user_id):
     """The profile page"""
-    # try:
     user_personal_data = UserInformation.objects.get(owner=auth_user_id)
     if UserInformation.objects.get(id=auth_user_id).owner != request.user:
         raise Http404
-    # except DoesNotExist:
-    #     return redirect()
+
     context = {'user_personal_data': user_personal_data}
     return render(request, 'learning_logs/my_space.html', context)
 
 
-@login_required()
-def apply_loan(request):
-    """The page where you can apply for a loan"""
-    return render(request, 'learning_logs/apply.html')
-
-
 def download_application_form(request):
-    """Used to allow the user to download forms"""
-    la_file_path = '/loan_documents'
-    filename = 'ApplicationForm.docx'
+    """Used to allow the user to download forms on the APPLY page"""
+    la_file_path = 'media/'
+    filename = 'ApplicationForm.pdf'
 
-    file = open(la_file_path, 'r')
+    file = open(os.path.join(os.path.dirname('media'), 'ApplicationForm.pdf'), 'r')
     mime_type, _ = mimetypes.guess_type(la_file_path)
     response = HttpResponse(file, content_type=mime_type)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
-    # return response
-    return render(response, 'learning_logs/apply.html', request)
+    return render(request, 'learning_logs/apply.html')
+
+
+def apply_loan(request, auth_user_id):
+    """Used to enter data and apply online"""
+    if auth_user_id != request.user.id:
+        raise Http404
+    print(request.user.id)
+    if request.method == 'POST':
+        form = LoanApplicationForm(data=request.POST)
+        if form.is_valid():
+            apply_loan = form.save(commit=False)
+            apply_loan.owner = request.user.id
+            apply_loan.save()
+            return redirect(f'/my_space/{auth_user_id}/')
+        context = {'form': form}
+        return render(request, 'learning_logs/apply_online.html', context)
+    return render(request, 'learning_logs/apply_online.html', {'form': LoanApplicationForm()})
 
 
 def loan_calculator(request):

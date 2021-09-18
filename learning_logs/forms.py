@@ -1,5 +1,7 @@
 from django import forms
-from .models import Topic, Entry, UserInformation, CustomerMessage
+from .models import Topic, Entry, UserInformation, CustomerMessage, LoanApplication
+from djmoney.models.fields import MoneyField
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class TopicForm(forms.ModelForm):
@@ -34,3 +36,17 @@ class CustomerMessageForm(forms.ModelForm):
         labels = {'customer_message_subject': 'Subject', 'customer_message': 'Message'}
         widgets = {'customer_message_subject': forms.Textarea(attrs={'cols': 60, 'rows': 1}),
                    'customer_message': forms.Textarea(attrs={'cols': 60, 'rows': 5})}
+
+
+class LoanApplicationForm(forms.ModelForm):
+    class Meta:
+        model = LoanApplication
+        fields = ('loan_purpose', 'loan_amount', 'loan_term', 'date_of_birth', 'marital_status', 'children',
+                  'residential_status', 'residence_duration', 'employment_status', 'monthly_salary', 'monthly_expenses',
+                  'monthly_rent', 'bankrupted')
+        labels = {'loan_purpose': 'Loan purpose', 'loan_amount': 'Loan amount', 'loan_term': 'Loan term',
+                  'date_of_birth': 'Date of Birth (dd/mm/yyyy)', 'marital_status': 'Marital status',
+                  'Children': 'No. of children', 'residential_status': 'Residential status',
+                  'residence_duration': 'Years lived at current address', 'employment_status': 'Employment status',
+                  'monthly_salary': 'Monthly salary', 'monthly_expenses': 'Monthly expenses',
+                  'monthly_rent': 'Monthly rent', 'bankrupted': 'Are you currently bankrupted?', }

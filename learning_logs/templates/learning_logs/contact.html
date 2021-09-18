@@ -18,9 +18,12 @@
     <p>Bistrita-Nasaud</p>
     <p>42007</p>
 
-    <img src="/photos/our_location.jpg" alt="our location" width="380" height="300">
+    <img src="/media/our_location.jpg" alt="our location" width="380" height="300">
     <br>
-<a href="{% url 'learning_logs:contact_form' request.user.id %}">Send us a message (you must be logged in)</a>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'learning_logs:contact_form' request.user.id %}">Send us a message (you must be logged in)</a>
+    {% endif %}
 
 </body>
 
