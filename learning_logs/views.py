@@ -2,8 +2,8 @@ import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
-from .models import Topic, Entry, UserInformation, CustomerMessage, LoanApplication
-from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm, LoanApplicationForm
+from .models import Topic, Entry, UserInformation, CustomerMessage, LoanApplication, LoanCalculation
+from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm, LoanApplicationForm, LoanCalculationForm
 import mimetypes
 
 
@@ -166,13 +166,59 @@ def apply_loan(request, auth_user_id):
     return render(request, 'learning_logs/apply_online.html', {'form': LoanApplicationForm()})
 
 
-def loan_calculator(request):
+@login_required()
+def view_loan_request(request, loan_id):
+    """To view each loan request"""
+    individual_loan_req = LoanApplication.objects.get(id=loan_id)
+
+    if individual_loan_req.owner != request.user:
+        raise Http404
+
+    context = {'individual_loan_req': individual_loan_req}
+    return render(request, 'learning_logs/view_loan_request.html', context)
+
+
+@login_required()
+def loan_calculator(request, auth_user_id):
     """This page displays the loan calculator"""
-    return render(request, 'learning_logs/calculator.html')
+    # calculation_data = LoanCalculation.objects.get(owner=auth_user_id)
+
+    if auth_user_id != request.user.id:
+        raise Http404
+
+    def monthly_loan(principal, interest_rate, duration):
+        n = duration * 12
+        r = interest_rate / (100 * 12)
+        monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
+        return monthly_payment
+
+    def remaining_balance(principal, annual_interest_rate, duration, payments):
+        r = annual_interest_rate / 1200
+        m = r + 1
+        n = duration * 12
+
+        remaining = principal * (((m ** n) - (m ** payments)) / ((m ** n) - 1))
+        return remaining
+
+    if request.method == 'POST':
+        form = LoanCalculationForm(data=request.POST)
+
+        if form.is_valid():
+            loan_calculator = form.save(commit=False)
+            loan_calculator.owner = request.user
+            loan_calculator.save()
+            return redirect(f'/calculator/{auth_user_id}/')
+        context = {'form': form}
+        return render(request, 'learning_logs/calculator.html', context)
+
+    else:
+        form = LoanCalculationForm(data=request.POST)
+        context = {'form': form}
+        return render(request, 'learning_logs/calculator.html', context)
 
 
 def loans_display(request):
-    """This page displays all the loans"""
+    """This page displays all the loans that the company can sell, not the user's loans list!"""
     return render(request, 'learning_logs/loans.html')
 
 

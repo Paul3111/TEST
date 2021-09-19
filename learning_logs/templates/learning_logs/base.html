@@ -37,7 +37,7 @@
                     <a class="nav-link" href="{% url 'learning_logs:loans' %}">Loans</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'learning_logs:calculator' %}">Calculator</a>
+                    <a class="nav-link" href="{% url 'learning_logs:calculator' request.user.id %}">Calculator</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'learning_logs:apply' %}">APPLY FOR A LOAN HERE</a>
@@ -60,9 +60,6 @@
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'learning_logs:loans' %}">Loans</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'learning_logs:calculator' %}">Calculator</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'learning_logs:about_us' %}">About us</a>

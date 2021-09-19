@@ -30,11 +30,13 @@ urlpatterns = [
     #Apply online page
     path('apply_online/<int:auth_user_id>/', views.apply_loan, name='apply_online'),
     #Calculator page.
-    path('calculator/', views.loan_calculator, name='calculator'),
-    #Display loans page
+    path('calculator/<int:auth_user_id>/', views.loan_calculator, name='calculator'),
+    #Display loans page, the page where you see all the types of loans
     path('loans/', views.loans_display, name='loans'),
     #My loans page.
     path('my_loans/<int:auth_user_id>/', views.my_loans, name='my_loans'),
+    #To view a single loan and all the data
+    path('view_loan_request/<int:loan_id>/', views.view_loan_request, name='view_loan_request'),
     #Reports page.
     path('reports/', views.my_reports, name='reports'),
     #Messages page.

@@ -2,23 +2,25 @@
 
 {% block content %}
 
+
+    <form action="{% url 'learning_logs:calculator' request.user.id %}" method='post'>
+            {% csrf_token %}
+        {%  for field in form %}
+            {{ field.label }} {{ field }}
+        {%  endfor %}
+    <br><br>
+        <button name="submit">Calculate</button>
+    </form>
+<br>
     <div>
         <a>Drop down list</a>
-            <p>Fields to enter date, some more drop down lists</p>
-            <p>amount you wish to borrow</p>
-            <p>for how long</p>
-            <p>apr interest rate (sa aleaga din lista intre 0.1% si 20%</p>
-        <button>Calculate monthly repayments</button>
     <p>display "Your monthly repayment will be £xxx . THe total amount repayable will be £xxx therefore the loan will cost you £xxx (total interest)</p>
     </div>
 
     <div>
 
         <br><p>After the customer obtains the quote. Button if they wish to apply ...
-            redirects them to the Apply page (if registered, to not need to type their
-            personal data again, just some forms?</p>
-
-        <p>Use a lot of buttons and radio buttons where possible</p>
+            redirects them to the Apply page (and they have to upload a file with some scanned documents)?</p>
 
         <button>Apply for this loan</button>
     </div>

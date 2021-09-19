@@ -15,7 +15,7 @@
         {% for loan in user_loans %}
 
             <li><h3>
-                <a href="{% url 'learning_logs:my_loans' loan.id %}">AMOUNT: {{ loan.loan_amount }} -
+                <a href="{% url 'learning_logs:view_loan_request' loan.id %}">AMOUNT: {{ loan.loan_amount }} -
                     TERM (years): {{ loan.loan_term }}</a>
             </h3></li>
 
