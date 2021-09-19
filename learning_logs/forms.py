@@ -53,5 +53,6 @@ class LoanApplicationForm(forms.ModelForm):
 class LoanCalculationForm(forms.ModelForm):
     class Meta:
         model = LoanCalculation
-        fields = ('principal', 'interest_rate', 'duration')
-        labels = {'principal': 'Loan amount', 'interest_rate': 'Interest rate', 'duration': 'Loan term (years)'}
+        fields = ('principal', 'interest_rate', 'duration', 'monthly_payment')
+        labels = {'principal': 'Loan amount', 'interest_rate': 'Interest rate', 'duration': 'Loan term (years)',
+                  'monthly_payment': 'Monthly payment'}

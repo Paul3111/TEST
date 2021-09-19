@@ -7,6 +7,8 @@
             {% csrf_token %}
         {%  for field in form %}
             {{ field.label }} {{ field }}
+            <br>
+            <br>
         {%  endfor %}
     <br><br>
         <button name="submit">Calculate</button>
@@ -14,6 +16,8 @@
 <br>
     <div>
         <a>Drop down list</a>
+
+        {{ monthly_loan }}
     <p>display "Your monthly repayment will be £xxx . THe total amount repayable will be £xxx therefore the loan will cost you £xxx (total interest)</p>
     </div>
 

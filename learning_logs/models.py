@@ -113,10 +113,17 @@ class LoanApplication(models.Model):
 
 class LoanCalculation(models.Model):
     """Used to store and perform loan calculations"""
-    principal = models.FloatField(default=0.1)
-    interest_rate = models.FloatField(default=0.1)
-    duration = models.IntegerField(default=1)
+    principal = models.FloatField(default=0.0)
+    interest_rate = models.FloatField(default=0.0)
+    duration = models.IntegerField(default=0)
+    monthly_payment = models.FloatField(default=0.0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def monthly_loan(self, principal, interest_rate, duration):
+        n = duration * 12
+        r = interest_rate / (100 * 12)
+        monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
+        return monthly_payment
 
     def __str__(self):
         return self.principal, self.interest_rate, self.duration

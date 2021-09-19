@@ -180,7 +180,7 @@ def view_loan_request(request, loan_id):
 
 @login_required()
 def loan_calculator(request, auth_user_id):
-    """This page displays the loan calculator"""
+    """This page displays the loan calculator and saves the calculations"""
     # calculation_data = LoanCalculation.objects.get(owner=auth_user_id)
 
     if auth_user_id != request.user.id:
@@ -192,8 +192,8 @@ def loan_calculator(request, auth_user_id):
         monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
         return monthly_payment
 
-    def remaining_balance(principal, annual_interest_rate, duration, payments):
-        r = annual_interest_rate / 1200
+    def remaining_balance(principal, interest_rate, duration, payments):
+        r = interest_rate / 1200
         m = r + 1
         n = duration * 12
 
@@ -202,12 +202,20 @@ def loan_calculator(request, auth_user_id):
 
     if request.method == 'POST':
         form = LoanCalculationForm(data=request.POST)
-
         if form.is_valid():
+            principal = LoanCalculation.principal
+            interest_rate = LoanCalculation.interest_rate
+            duration = LoanCalculation.duration
+            monthly_payment = LoanCalculation.monthly_payment
+
             loan_calculator = form.save(commit=False)
             loan_calculator.owner = request.user
             loan_calculator.save()
-            return redirect(f'/calculator/{auth_user_id}/')
+
+            monthly_loan(principal, interest_rate, duration)
+            context = {'form': form, 'monthly_loan': monthly_loan}
+            # return redirect(f'/calculator/{auth_user_id}/', {'form': form, 'monthly_loan': monthly_loan})
+            return render (request, 'learning_logs/calculator.html', context)
         context = {'form': form}
         return render(request, 'learning_logs/calculator.html', context)
 

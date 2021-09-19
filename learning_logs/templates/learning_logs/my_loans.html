@@ -11,16 +11,26 @@
         <p>There are no loan requests!</p>
 
     {% else %}
+        <table>
+        <thead>
+            <tr>
+            <th>Req no.</th>
+            <th>Loan Amount</th>
+            <th>Loan Term</th>
+            </tr>
+        </thead>
 
-        {% for loan in user_loans %}
-
-            <li><h3>
-                <a href="{% url 'learning_logs:view_loan_request' loan.id %}">AMOUNT: {{ loan.loan_amount }} -
-                    TERM (years): {{ loan.loan_term }}</a>
-            </h3></li>
-
-        {% endfor %}
-
+        <tbody>
+            {% for loan in user_loans %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ loan.loan_amount }}</td>
+                    <td>{{ loan.loan_term }}</td>
+                    <td><a href="{% url 'learning_logs:view_loan_request' loan.id %}">View details</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
     {% endif %}
 
 {% endblock %}
