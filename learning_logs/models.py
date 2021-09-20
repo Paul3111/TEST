@@ -95,6 +95,7 @@ class LoanApplication(models.Model):
     loan_purpose = models.CharField(max_length=100, choices=purpose_list, default="")
     loan_amount = MoneyField(decimal_places=0, default_currency='GBP', max_digits=11)
     loan_term = models.CharField(max_length=100, choices=term_list)
+    interest_rate = models.FloatField(default=0.0)
     date_of_birth = models.DateField(max_length=10)
     marital_status = models.CharField(max_length=100, choices=marital_list, default="")
     children = models.IntegerField(default=0, blank=True)
@@ -105,6 +106,7 @@ class LoanApplication(models.Model):
     monthly_expenses = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
     monthly_rent = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
     bankrupted = models.BooleanField(default=False)
+    monthly_payment = models.FloatField(default=0.0, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -116,17 +118,17 @@ class LoanCalculation(models.Model):
     principal = models.FloatField(default=0.0)
     interest_rate = models.FloatField(default=0.0)
     duration = models.IntegerField(default=0)
-    monthly_payment = models.FloatField(default=0.0)
+    monthly_payment = models.FloatField(default=0.0, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def monthly_loan(self, principal, interest_rate, duration):
-        n = duration * 12
-        r = interest_rate / (100 * 12)
-        monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
-        return monthly_payment
-
-    def __str__(self):
-        return self.principal, self.interest_rate, self.duration
+    # def monthly_loan(self, principal, interest_rate, duration):
+    #     n = duration * 12
+    #     r = interest_rate / (100 * 12)
+    #     monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
+    #     return monthly_payment
+    #
+    # def __str__(self):
+    #     return self.principal, self.interest_rate, self.duration
 
 
 # project = models.FileField(upload_to='proiecte/', null=True, blank=True)

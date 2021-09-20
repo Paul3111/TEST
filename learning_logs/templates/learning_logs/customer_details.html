@@ -4,7 +4,7 @@
 
     <p>Amend your personal details</p>
 
-    <form action="{% url 'learning_logs:customer_details' request.user.id %}" method='post'>
+    <form action="{% url 'learning_logs:customer_details' request.user.id %}" method='post' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
         <button name="submit">Save details</button>

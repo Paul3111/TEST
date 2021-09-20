@@ -181,43 +181,54 @@ def view_loan_request(request, loan_id):
 @login_required()
 def loan_calculator(request, auth_user_id):
     """This page displays the loan calculator and saves the calculations"""
-    # calculation_data = LoanCalculation.objects.get(owner=auth_user_id)
 
     if auth_user_id != request.user.id:
         raise Http404
 
     def monthly_loan(principal, interest_rate, duration):
-        n = duration * 12
-        r = interest_rate / (100 * 12)
-        monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
+        """Calculates the monthly repayment"""
+        n = int(duration) * 12
+        r = float(interest_rate) / (100 * 12)
+        monthly_payment = int(principal) * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
         return monthly_payment
 
     def remaining_balance(principal, interest_rate, duration, payments):
+        """Calculates the remaining BALANCE after x payments made"""
         r = interest_rate / 1200
         m = r + 1
         n = duration * 12
-
-        remaining = principal * (((m ** n) - (m ** payments)) / ((m ** n) - 1))
+        remaining = int(principal) * (((m ** n) - (m ** int(payments))) / ((m ** n) - 1))
         return remaining
+
+    # print('this is remaining after X payments 100.000 , 8% , 10 years, 119 pmts', remaining_balance(100000, 8, 10, 119))
+
+    def total_cost(pr, m_rate, pmts):
+        """Calculates the total interest"""
+        r = m_rate / 1200
+        n = pmts * 12
+        loan_total = (int(pr) * float(r) * int(n)) / (1 - ((1+float(r))**int(-n)))
+        return loan_total
 
     if request.method == 'POST':
         form = LoanCalculationForm(data=request.POST)
         if form.is_valid():
-            principal = LoanCalculation.principal
-            interest_rate = LoanCalculation.interest_rate
-            duration = LoanCalculation.duration
-            monthly_payment = LoanCalculation.monthly_payment
+            principal = form.data['principal']
+            interest_rate = form.data['interest_rate']
+            duration = form.data['duration']
+
+            repayment = round(monthly_loan(int(principal), float(interest_rate), int(duration)), 2)
+            fees = round(total_cost(int(principal), float(interest_rate), int(duration)) - int(principal), 2)
+            loan_total = round(remaining_balance(int(principal), float(interest_rate), int(duration), 0) + fees, 2)
+            take_home = round(loan_total - fees, 0)
 
             loan_calculator = form.save(commit=False)
             loan_calculator.owner = request.user
+            loan_calculator.monthly_payment = repayment
             loan_calculator.save()
 
-            monthly_loan(principal, interest_rate, duration)
-            context = {'form': form, 'monthly_loan': monthly_loan}
-            # return redirect(f'/calculator/{auth_user_id}/', {'form': form, 'monthly_loan': monthly_loan})
-            return render (request, 'learning_logs/calculator.html', context)
-        context = {'form': form}
-        return render(request, 'learning_logs/calculator.html', context)
+            context = {'form': form, 'repayment': repayment, 'loan_total': loan_total, 'fees': fees,
+                       'take_home': take_home}
+            return render(request, 'learning_logs/calculator.html', context)
 
     else:
         form = LoanCalculationForm(data=request.POST)
@@ -273,12 +284,12 @@ def customer_details(request, auth_user_id):
         form = UserInformationForm(instance=existing_data)
     else:
         #POST data submitted; process data.
-        form = UserInformationForm(instance=existing_data, data=request.POST)
+        form = UserInformationForm(request.POST, request.FILES, instance=existing_data)
+        print(request.FILES)
         if form.is_valid():
             customer_details = form.save(commit=False)
             customer_details.owner = request.user
             customer_details.save()
-            # form.save()
             return redirect(f'/my_space/{customer_details.id}/')
 
     #Display a blank or invalid form.
