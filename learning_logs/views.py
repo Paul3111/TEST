@@ -3,13 +3,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from .models import Topic, Entry, UserInformation, CustomerMessage, LoanApplication, LoanCalculation
-from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm, LoanApplicationForm, LoanCalculationForm
+from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageForm, LoanApplicationForm,\
+    LoanCalculationForm
 import mimetypes
+import requests
 
 
 def index(request):
     """The home page for Learning Log."""
-    return render(request, 'learning_logs/index.html')
+    response = requests.get('http://data.fixer.io/api/latest?access_key=04d511adeae7cc01b6e962929b71b95c')
+    json_response = response.json()
+    result = json_response['rates']
+    fx_date = json_response['date']
+    return render(request, 'learning_logs/index.html', {'result': result, 'date': fx_date})
 
 
 @login_required
@@ -219,7 +225,7 @@ def loan_calculator(request, auth_user_id):
             repayment = round(monthly_loan(int(principal), float(interest_rate), int(duration)), 2)
             fees = round(total_cost(int(principal), float(interest_rate), int(duration)) - int(principal), 2)
             loan_total = round(remaining_balance(int(principal), float(interest_rate), int(duration), 0) + fees, 2)
-            take_home = round(loan_total - fees, 0)
+            take_home = int(loan_total - fees)
 
             loan_calculator = form.save(commit=False)
             loan_calculator.owner = request.user

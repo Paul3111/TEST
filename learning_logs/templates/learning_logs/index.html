@@ -2,6 +2,11 @@
 
 {% block page_header %}
 
+<head>
+
+    <title>Home</title>
+</head>
+
 <body>
 
     <h1>TO ADD THE MENU ON THIS PAGE and the other boxes! + API!!!</h1>
@@ -16,6 +21,31 @@
             <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Register</a>
         </div>
     {% endif %}
+
+    <div>
+
+    <h3>Exchange rates at {{ date }} (from EUR) </h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Currency</th>
+                <th>Rates</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for currencies, values in result.items %}
+                <tr>
+                    <td>{{ currencies }}</td>
+                    <td>{{ values }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+
 </body>
 
 {% endblock page_header %}
