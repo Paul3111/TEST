@@ -93,7 +93,8 @@ employment_status_list = (('Full time', 'Full time'), ('Self employed', 'Self em
 class LoanApplication(models.Model):
     """Form to collect loan application data from customer"""
     loan_purpose = models.CharField(max_length=100, choices=purpose_list, default="")
-    loan_amount = MoneyField(decimal_places=0, default_currency='GBP', max_digits=11)
+    # loan_amount = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
+    loan_amount = models.FloatField(default=0.0)
     loan_term = models.CharField(max_length=100, choices=term_list)
     interest_rate = models.FloatField(default=0.0)
     date_of_birth = models.DateField(max_length=10)
@@ -107,6 +108,9 @@ class LoanApplication(models.Model):
     monthly_rent = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
     bankrupted = models.BooleanField(default=False)
     monthly_payment = models.FloatField(default=0.0, null=True)
+    fees = models.FloatField(default=0.0, null=True)
+    loan_total = models.FloatField(default=0.0, null=True)
+    take_home = models.FloatField(default=0.0, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -120,15 +124,6 @@ class LoanCalculation(models.Model):
     duration = models.IntegerField(default=0)
     monthly_payment = models.FloatField(default=0.0, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    # def monthly_loan(self, principal, interest_rate, duration):
-    #     n = duration * 12
-    #     r = interest_rate / (100 * 12)
-    #     monthly_payment = principal * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
-    #     return monthly_payment
-    #
-    # def __str__(self):
-    #     return self.principal, self.interest_rate, self.duration
 
 
 # project = models.FileField(upload_to='proiecte/', null=True, blank=True)

@@ -160,16 +160,58 @@ def apply_loan(request, auth_user_id):
     if auth_user_id != request.user.id:
         raise Http404
 
+    def monthly_loan(principal2, interest_rate2, duration2):
+        """Calculates the monthly repayment"""
+        n = int(duration2) * 12
+        r = float(interest_rate2) / (100 * 12)
+        monthly_payment2 = int(principal2) * ((r * ((r + 1) ** n)) / (((r + 1) ** n) - 1))
+        return monthly_payment2
+
+    def remaining_balance(principal2, interest_rate2, duration2, payments2):
+        """Calculates the remaining BALANCE after x payments made"""
+        r = interest_rate2 / 1200
+        m = r + 1
+        n = duration2 * 12
+        remaining2 = int(principal2) * (((m ** n) - (m ** int(payments2))) / ((m ** n) - 1))
+        return remaining2
+
+    def total_cost(pr, m_rate, pmts):
+        """Calculates the total interest"""
+        r = m_rate / 1200
+        n = pmts * 12
+        loan_total2 = (int(pr) * float(r) * int(n)) / (1 - ((1+float(r))**int(-n)))
+        return loan_total2
+
     if request.method == 'POST':
         form = LoanApplicationForm(data=request.POST)
+
+        loan_amount = form.data['loan_amount']
+        interest_rate = form.data['interest_rate']
+        loan_term = form.data['loan_term']
+
+        repayment = round(monthly_loan(int(loan_amount), float(interest_rate), int(loan_term)), 2)
+        fees = round(total_cost(int(loan_amount), float(interest_rate), int(loan_term)) - int(loan_amount), 2)
+        loan_total = round(remaining_balance(int(loan_amount), float(interest_rate), int(loan_term), 0) + fees, 2)
+        take_home = int(loan_total - fees)
+
         if form.is_valid():
             apply_loan = form.save(commit=False)
             apply_loan.owner = request.user
+            apply_loan.monthly_payment = repayment
+            apply_loan.fees = fees
+            apply_loan.loan_total = loan_total
+            apply_loan.take_home = take_home
             apply_loan.save()
             return redirect(f'/my_space/{auth_user_id}/')
-        context = {'form': form}
+
+        context = {'form': form, 'repayment': repayment, 'loan_total': loan_total, 'fees': fees,
+                   'take_home': take_home}
         return render(request, 'learning_logs/apply_online.html', context)
-    return render(request, 'learning_logs/apply_online.html', {'form': LoanApplicationForm()})
+        # return render(request, 'learning_logs/view_loan_request.html', context)
+
+    else:
+        return render(request, 'learning_logs/apply_online.html', {'form': LoanApplicationForm()})
+        # return render(request, 'learning_logs/view_loan_request.html', {'form': LoanApplicationForm()})
 
 
 @login_required()

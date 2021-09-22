@@ -48,10 +48,10 @@
 
         <div class="card-body">
             <h4>COSTS:</h4> <br>
-            Interest (%): <br>
-            Monthly installment: <br>
-            Total interest paid: <br>
-            TOTAL (including fees, where applicable):
+            Interest rate (%): {{ individual_loan_req.interest_rate }}<br>
+            Monthly installment: {{ individual_loan_req.monthly_payment }} <br>
+            Total interest paid: {{ individual_loan_req.fees }}<br>
+            TOTAL (including fees, where applicable): {{ individual_loan_req.loan_total }}
         </div>
 
     </div>
