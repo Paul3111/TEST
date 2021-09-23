@@ -20,8 +20,28 @@
         </div>
     {% endif %}
 
+    {% if user.is_authenticated %}
+        <div class="container">
+          <a href="{% url 'learning_logs:my_space' request.user.id %}" class="btn btn-outline-success">My account</a>
+          <a href="{% url 'learning_logs:apply' %}" class="btn btn-outline-success">Apply for a loan</a>
+          <a href="{% url 'learning_logs:calculator' request.user.id %}" class="btn btn-outline-success">Loan calculator</a>
+        </div>
+    {% endif %}
+<br>
     <div>
+        <h3>Banks in the UK</h3>
+        <a href="https://personal.rbs.co.uk/" target="_blank">RBS</a>
+        <a href="https://www.hsbc.co.uk/" target="_blank">HSBC</a>
+        <a href="https://www.barclays.co.uk/" target="_blank">Barclays</a>
+        <a href="https://www.halifax.co.uk/" target="_blank">Halifax</a>
+        <a href="https://www.lloydsbank.com/" target="_blank">Lloyds Bank</a>
+        <a href="https://www.metrobankonline.co.uk/" target="_blank">Metro Bank</a>
+        <a href="https://personal.natwest.com/" target="_blank">Natwest</a>
+    </div>
 
+        <br>
+
+    <div>
     <h3>Exchange rates at {{ date }} (from EUR) </h3>
 
     <table>

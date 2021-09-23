@@ -3,6 +3,7 @@
 {% load bootstrap4 %}
 
 <html lang ="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,13 +13,13 @@
     {% bootstrap_javascript jquery='full' %}
 </head>
 
-<body>
+<body style="background-color:aliceblue">
 
-    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+    <nav class="navbar navbar-expand-md navbar-light bg-warning sticky-top mb-4 border">
 
         <img src= "/media/logo.jpg" alt="logo" width="40" height="40" >
 
-        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">Home Page</a>
+        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">Home</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -88,4 +89,16 @@
     </main>
 
 </body>
+
+<footer>
+<div class= "navbar navbar-inverse navbar-static-bottom" role="navigation">
+    <div class="navbar-text pull-left">
+    </div>
+    <div class="navbar-text pull-left">
+        &copy; Paul, 2021
+        <a href="https://ambalampovesti.wordpress.com/" target="_blank">se recomanda lectura</a>
+    </div>
+</div>
+</footer>
+
 </html>
