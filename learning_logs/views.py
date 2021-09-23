@@ -228,13 +228,14 @@ def apply_loan(request, auth_user_id):
             remaining_balance = float(loan_amount)
             rs_file = open(f'media/rs{auth_user_id}_{apply_loan.id}.csv', 'w', newline="")
             writer = csv.writer(rs_file)
+            writer.writerow(['Instalment no.', 'Monthly payment', 'Principal', 'Interest', 'Balance'])
 
             for i in range(1, (int(loan_term) * 12) + 1):
                 monthly_instalment = PMT(float(interest_rate_rs) / 12, 12 * int(loan_term), float(loan_amount))
                 principal = PPMT(float(interest_rate_rs) / 12, i, 12 * int(loan_term), float(loan_amount))
                 interest_rs = IPMT(float(interest_rate_rs) / 12, i, 12 * int(loan_term), float(loan_amount))
-                line = f'Instalment {i}', round(float(monthly_instalment), 2), round(float(principal), 2),\
-                       round(float(interest_rs), 2), round(remaining_balance + float(principal), 2)
+                line = f'Instalment {i}', -round(float(monthly_instalment), 2), -round(float(principal), 2),\
+                       -round(float(interest_rs), 2), round(remaining_balance + float(principal), 2)
                 remaining_balance += float(principal)
                 writer.writerow(line)
 
