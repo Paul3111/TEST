@@ -11,28 +11,28 @@
 
     <div class="card mb-3">
 
-            <div class="card-body">
-            <h4>Applicant information:</h4> <br>
+        <div class="card-body">
+            <h4>Applicant information:</h4>
             Date of birth: {{ individual_loan_req.date_of_birth }} <br>
             Marital status: {{ individual_loan_req.marital_status }} <br>
             No. of children: {{ individual_loan_req.children }} <br>
             Residential status: {{ individual_loan_req.residential_status }} <br>
-            Years lived at current address: {{ individual_loan_req.residence_duration }} <br>
+            Years lived at current address: {{ individual_loan_req.residence_duration }}
         </div>
 
         <div class="card-body">
-            <h4>Loan details:</h4> <br>
+            <h4>Loan details:</h4>
             Loan purpose: {{ individual_loan_req.loan_purpose }} <br>
             Loan amount: {{ individual_loan_req.loan_amount }} <br>
             Loan term (years): {{ individual_loan_req.loan_term }}
         </div>
 
         <div class="card-body">
-            <h4>Financial information:</h4> <br>
+            <h4>Financial information:</h4>
             Employment status: {{ individual_loan_req.employment_status }} <br>
-            Monthly salary: {{ individual_loan_req.monthly_salary }} <br>
-            Monthly expenses: {{ individual_loan_req.monthly_expenses }} <br>
-            Monthly rent: {{ individual_loan_req.monthly_rent }} <br>
+            Monthly salary: £{{ individual_loan_req.monthly_salary }} <br>
+            Monthly expenses: £{{ individual_loan_req.monthly_expenses }} <br>
+            Monthly rent: £{{ individual_loan_req.monthly_rent }} <br>
             {% if individual_loan_req.bankrupted == 1 %}
                 Currently bankrupted?: Yes
             {% else %}
@@ -42,16 +42,14 @@
 
     </div>
 
-    <p>If/after approved show costs and repayment schedule and chart ( other costs (%), principal, interest) </p>
-
     <div class="card mb-3">
 
         <div class="card-body">
-            <h4>COSTS:</h4> <br>
+            <h4>COSTS:</h4>
             Interest rate (%): {{ individual_loan_req.interest_rate }}<br>
-            Monthly installment: {{ individual_loan_req.monthly_payment }} <br>
-            Total interest paid: {{ individual_loan_req.fees }}<br>
-            TOTAL (including fees, where applicable): {{ individual_loan_req.loan_total }}
+            Monthly instalment: £{{ individual_loan_req.monthly_payment }} <br>
+            Total interest paid: £{{ individual_loan_req.fees }}<br>
+            TOTAL (including fees, where applicable): £{{ individual_loan_req.loan_total }}
 
         </div>
 

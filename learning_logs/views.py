@@ -1,5 +1,6 @@
 import os
 import random
+import csv
 from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -199,6 +200,7 @@ def apply_loan(request, auth_user_id):
         take_home = int(loan_total - fees)
 
         if form.is_valid():
+
             apply_loan = form.save(commit=False)
             apply_loan.owner = request.user
             apply_loan.monthly_payment = repayment
@@ -206,6 +208,38 @@ def apply_loan(request, auth_user_id):
             apply_loan.loan_total = loan_total
             apply_loan.take_home = take_home
             apply_loan.save()
+
+            def PMT(rate, nper, pv, fv=0, type=0):
+                if rate != 0:
+                    pmt = (float(rate) * (fv + pv * (1 + float(rate)) ** nper)) / ((1 + float(rate) * type) * (1 - (1 + float(rate)) ** nper))
+                else:
+                    pmt = (-1 * (fv + pv) / nper)
+                return (pmt)
+
+            def IPMT(rate, per, nper, pv, fv=0, type=0):
+                ipmt = -(((1 + float(rate)) ** (per - 1)) * (pv * float(rate) + PMT(float(rate), nper, pv, fv=0, type=0)) - PMT(float(rate), nper,pv, fv=0, type=0))
+                return (ipmt)
+
+            def PPMT(rate, per, nper, pv, fv=0, type=0):
+                ppmt = PMT(float(rate), nper, pv, fv=0, type=0) - IPMT(float(rate), per, nper, pv, fv=0, type=0)
+                return (ppmt)
+
+            interest_rate_rs = float(interest_rate) / 100
+            remaining_balance = float(loan_amount)
+            rs_file = open(f'media/rs{auth_user_id}_{apply_loan.id}.csv', 'w', newline="")
+            writer = csv.writer(rs_file)
+
+            for i in range(1, (int(loan_term) * 12) + 1):
+                monthly_instalment = PMT(float(interest_rate_rs) / 12, 12 * int(loan_term), float(loan_amount))
+                principal = PPMT(float(interest_rate_rs) / 12, i, 12 * int(loan_term), float(loan_amount))
+                interest_rs = IPMT(float(interest_rate_rs) / 12, i, 12 * int(loan_term), float(loan_amount))
+                line = f'Instalment {i}', round(float(monthly_instalment), 2), round(float(principal), 2),\
+                       round(float(interest_rs), 2), round(remaining_balance + float(principal), 2)
+                remaining_balance += float(principal)
+                writer.writerow(line)
+
+            rs_file.close()
+
             return redirect(f'/my_space/{auth_user_id}/')
 
         context = {'form': form, 'repayment': repayment, 'loan_total': loan_total, 'fees': fees,

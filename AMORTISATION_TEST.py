@@ -16,17 +16,17 @@ def PPMT(rate, per, nper, pv, fv=0, type=0):
   return(ppmt)
 
 
-loan_amount = 50000
-interest = 8.5
+loan_amount = 70000
+interest = 7
 interest_rate = interest / 100
-loan_term = 6
+loan_term = 5
 remaining_balance = loan_amount
 
 for i in range(1, (loan_term*12)+1):
-    monthly_installment = PMT(interest_rate / 12, 12 * loan_term, loan_amount)
+    monthly_instalment = PMT(interest_rate / 12, 12 * loan_term, loan_amount)
     principal = PPMT(interest_rate / 12, i, 12 * loan_term, loan_amount)
     interest = IPMT(interest_rate / 12, i, 12 * loan_term, loan_amount)
-    print(f'Installment {i}', round(monthly_installment, 2), round(principal, 2), round(interest, 2),
+    print(f'Instalment {i}', round(monthly_instalment, 2), round(principal, 2), round(interest, 2),
           round(remaining_balance + principal, 2))
 
     remaining_balance += principal
