@@ -2,9 +2,16 @@
 
 {% block content %}
 
+    <head>
+    <title>Reports</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
     <a href="{% url 'learning_logs:my_space' user.id %}">Back to account overview</a>
-
-    <h1>List with reports to generate</h1>
-    <h1>Show a pie chart with the user's loan (principal, interest, monthly repayment)</h1>
+    <br>
+    <h1>Just a random chart for the time being...</h1>
+    <img src="/media/loan_chart.png" alt="Chart"/>
+</body>
 
 {% endblock content %}

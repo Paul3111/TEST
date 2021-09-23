@@ -41,14 +41,14 @@ class LoanApplicationForm(forms.ModelForm):
         model = LoanApplication
         fields = ('loan_purpose', 'loan_amount', 'loan_term', 'interest_rate', 'date_of_birth', 'marital_status',
                   'children', 'residential_status', 'residence_duration', 'employment_status', 'monthly_salary',
-                  'monthly_expenses', 'monthly_rent', 'bankrupted')
+                  'monthly_expenses', 'monthly_rent', 'bankrupted', 'loan_documentation')
         labels = {'loan_purpose': 'Loan purpose', 'loan_amount': 'Loan amount', 'loan_term': 'Loan term (years)',
                   'interest_rate': 'Interest rate', 'date_of_birth': 'Date of Birth (dd/mm/yyyy)',
                   'marital_status': 'Marital status', 'Children': 'No. of children',
                   'residential_status': 'Residential status', 'residence_duration': 'Years lived at current address',
                   'employment_status': 'Employment status', 'monthly_salary': 'Monthly salary',
                   'monthly_expenses': 'Monthly expenses', 'monthly_rent': 'Monthly rent',
-                  'bankrupted': 'Are you currently bankrupted?'}
+                  'bankrupted': 'Are you currently bankrupted?', 'loan_documentation': 'Upload scanned documentation'}
 
 
 class LoanCalculationForm(forms.ModelForm):

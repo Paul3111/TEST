@@ -11,20 +11,20 @@
 
     <div class="card mb-3">
 
-        <div class="card-body">
-            <h4>Loan details:</h4> <br>
-            Loan purpose: {{ individual_loan_req.loan_purpose }} <br>
-            Loan amount: {{ individual_loan_req.loan_amount }} <br>
-            Loan term (years): {{ individual_loan_req.loan_term }}
-        </div>
-
-        <div class="card-body">
+            <div class="card-body">
             <h4>Applicant information:</h4> <br>
             Date of birth: {{ individual_loan_req.date_of_birth }} <br>
             Marital status: {{ individual_loan_req.marital_status }} <br>
             No. of children: {{ individual_loan_req.children }} <br>
             Residential status: {{ individual_loan_req.residential_status }} <br>
             Years lived at current address: {{ individual_loan_req.residence_duration }} <br>
+        </div>
+
+        <div class="card-body">
+            <h4>Loan details:</h4> <br>
+            Loan purpose: {{ individual_loan_req.loan_purpose }} <br>
+            Loan amount: {{ individual_loan_req.loan_amount }} <br>
+            Loan term (years): {{ individual_loan_req.loan_term }}
         </div>
 
         <div class="card-body">
@@ -52,11 +52,16 @@
             Monthly installment: {{ individual_loan_req.monthly_payment }} <br>
             Total interest paid: {{ individual_loan_req.fees }}<br>
             TOTAL (including fees, where applicable): {{ individual_loan_req.loan_total }}
+
         </div>
 
     </div>
 
      <h6>View repayment schedule <a href="/media/termsandconditions.pdf" download="T & C">here</a></h6>
+
+    <div>
+        <img src="/media/loan_chart.png" alt="Chart"/>
+    </div>
 
     <a href="{% url 'learning_logs:my_loans' request.user.id %}">Back to your loans list</a>
 

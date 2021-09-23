@@ -1,4 +1,6 @@
 import os
+import random
+from matplotlib import pyplot as plt
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
@@ -7,6 +9,8 @@ from .forms import TopicForm, EntryForm, UserInformationForm, CustomerMessageFor
     LoanCalculationForm
 import mimetypes
 import requests
+import matplotlib
+matplotlib.use('Agg')
 
 
 def index(request):
@@ -183,7 +187,7 @@ def apply_loan(request, auth_user_id):
         return loan_total2
 
     if request.method == 'POST':
-        form = LoanApplicationForm(data=request.POST)
+        form = LoanApplicationForm(request.POST, request.FILES)
 
         loan_amount = form.data['loan_amount']
         interest_rate = form.data['interest_rate']
@@ -207,11 +211,9 @@ def apply_loan(request, auth_user_id):
         context = {'form': form, 'repayment': repayment, 'loan_total': loan_total, 'fees': fees,
                    'take_home': take_home}
         return render(request, 'learning_logs/apply_online.html', context)
-        # return render(request, 'learning_logs/view_loan_request.html', context)
 
     else:
         return render(request, 'learning_logs/apply_online.html', {'form': LoanApplicationForm()})
-        # return render(request, 'learning_logs/view_loan_request.html', {'form': LoanApplicationForm()})
 
 
 @login_required()
@@ -221,6 +223,18 @@ def view_loan_request(request, loan_id):
 
     if individual_loan_req.owner != request.user:
         raise Http404
+
+    fee_data = individual_loan_req.fees
+    take_home_data = individual_loan_req.take_home
+
+    labels = 'Fees', 'Take Home'
+    sizes = [fee_data, take_home_data]
+    explode = (0.1, 0)
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax1.axis('equal')
+    plt.savefig('media/loan_chart.png', dpi=100)
 
     context = {'individual_loan_req': individual_loan_req}
     return render(request, 'learning_logs/view_loan_request.html', context)
@@ -304,6 +318,14 @@ def my_loans(request, auth_user_id):
 @login_required()
 def my_reports(request):
     """To allow the user to display reports and to view charts"""
+    labels = 'Sale', 'Purchase'
+    sizes = [random.randint(10, 30), random.randint(30, 50)]
+    explode = (0.1, 0)
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax1.axis('equal')
+    plt.savefig('media/loan_chart.png', dpi=100)
     return render(request, 'learning_logs/reports.html')
 
 
@@ -333,7 +355,6 @@ def customer_details(request, auth_user_id):
     else:
         #POST data submitted; process data.
         form = UserInformationForm(request.POST, request.FILES, instance=existing_data)
-        print(request.FILES)
         if form.is_valid():
             customer_details = form.save(commit=False)
             customer_details.owner = request.user

@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <form action="{% url 'learning_logs:apply_online' request.user.id %}" method='post'>
+    <form action="{% url 'learning_logs:apply_online' request.user.id %}" method='post' enctype="multipart/form-data">
             {% csrf_token %}
         {%  for field in form %}
             {{ field.label }} {{ field }}

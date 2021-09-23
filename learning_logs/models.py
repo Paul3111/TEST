@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-from djmoney.models.fields import MoneyField
-from django.core.validators import MinValueValidator, MaxValueValidator
+# from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Topic(models.Model):
@@ -93,24 +92,24 @@ employment_status_list = (('Full time', 'Full time'), ('Self employed', 'Self em
 class LoanApplication(models.Model):
     """Form to collect loan application data from customer"""
     loan_purpose = models.CharField(max_length=100, choices=purpose_list, default="")
-    # loan_amount = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
-    loan_amount = models.FloatField(default=0.0)
+    loan_amount = models.FloatField(default=0)
     loan_term = models.CharField(max_length=100, choices=term_list)
-    interest_rate = models.FloatField(default=0.0)
+    interest_rate = models.FloatField(default=0)
     date_of_birth = models.DateField(max_length=10)
     marital_status = models.CharField(max_length=100, choices=marital_list, default="")
     children = models.IntegerField(default=0, blank=True)
     residential_status = models.CharField(max_length=100, choices=residential_status_list, default="")
     residence_duration = models.IntegerField(default=0)
     employment_status = models.CharField(max_length=100, choices=employment_status_list, default="")
-    monthly_salary = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
-    monthly_expenses = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
-    monthly_rent = MoneyField(decimal_places=0, default=0, default_currency='GBP', max_digits=11)
+    monthly_salary = models.FloatField(default=0)
+    monthly_expenses = models.FloatField(default=0)
+    monthly_rent = models.FloatField(default=0)
     bankrupted = models.BooleanField(default=False)
-    monthly_payment = models.FloatField(default=0.0, null=True)
-    fees = models.FloatField(default=0.0, null=True)
-    loan_total = models.FloatField(default=0.0, null=True)
-    take_home = models.FloatField(default=0.0, null=True)
+    monthly_payment = models.FloatField(default=0, null=True)
+    fees = models.FloatField(default=0, null=True)
+    loan_total = models.FloatField(default=0, null=True)
+    take_home = models.FloatField(default=0, null=True)
+    loan_documentation = models.FileField(upload_to='media', null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -125,5 +124,3 @@ class LoanCalculation(models.Model):
     monthly_payment = models.FloatField(default=0.0, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
-# project = models.FileField(upload_to='proiecte/', null=True, blank=True)
