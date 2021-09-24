@@ -34,9 +34,15 @@
 
     <img src="/{{ user_personal_data.profile_picture }}" alt="Profile picture missing" width="160" height="170" ><br><br>
 
-    <a href="{% url 'learning_logs:reports' %}">Reports</a>
-    <a href="{% url 'learning_logs:my_loans' request.user.id %}">My loan applications</a>
-    <a href="{% url 'learning_logs:messages' request.user.id %}">My Messages</a><br><br>
+{#    <a href="{% url 'learning_logs:reports' %}">Reports</a>#}
+{#    <a href="{% url 'learning_logs:my_loans' request.user.id %}">My loan applications</a>#}
+{#    <a href="{% url 'learning_logs:messages' request.user.id %}">My Messages</a><br><br>#}
+
+    <div class="container">
+        <a href="{% url 'learning_logs:reports' %}" class="btn btn-outline-success">Reports</a>
+        <a href="{% url 'learning_logs:my_loans' request.user.id %}" class="btn btn-outline-success">View loan applications</a>
+        <a href="{% url 'learning_logs:messages' request.user.id %}" class="btn btn-outline-success">My Messages</a>
+    </div>
 
 {% endblock content %}
 
