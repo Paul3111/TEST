@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <a href="{% url 'learning_logs:contact' %}">Back to contact details page</a>
+    <a href="{% url 'learning_logs:contact' %}" class="btn btn-outline-warning">Back to contact details page</a>
     <br><br>
     <h1>Send us a message by filling the form below</h1>
     <br>
@@ -14,7 +14,7 @@
             <br>
         {%  endfor %}
     <br>
-        <button name="submit">Send message</button>
+        <button name="submit" class="btn btn-outline-success">Send message</button>
     </form>
     <br>
 

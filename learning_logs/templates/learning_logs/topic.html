@@ -7,7 +7,7 @@
 {% block content %}
 
 <p>
-    <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-outline-success">Add new entry</a>
 </p>
 
 {% for entry in entries %}
@@ -24,6 +24,6 @@
     <p>There are no entries for this topic yet.</p>
   {% endfor %}
 
-    <a href="{% url 'learning_logs:topics' %}" >Go back</a>
+    <a href="{% url 'learning_logs:topics' %}" class="btn btn-outline-warning">Go back</a>
 
 {% endblock %}

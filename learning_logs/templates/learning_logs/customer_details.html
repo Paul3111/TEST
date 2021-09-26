@@ -7,9 +7,9 @@
     <form action="{% url 'learning_logs:customer_details' request.user.id %}" method='post' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-        <button name="submit">Save details</button>
+        <button name="submit" class="btn btn-outline-success">Save details</button>
     </form>
     <br>
-    <a href="{% url 'learning_logs:my_space' request.user.id %}">Go back</a>
+    <a href="{% url 'learning_logs:my_space' request.user.id %}" class="btn btn-outline-warning">Go back</a>
 
 {% endblock content %}

@@ -15,11 +15,11 @@
             <br>
         {%  endfor %}
     <br>
-        <button name="submit">Send application</button>
+        <button name="submit" class="btn btn-outline-success">Send application</button>
     </form>
 
     <br>
-    <a href="{% url 'learning_logs:apply' %}">Go back</a>
+    <a href="{% url 'learning_logs:apply' %}" class="btn btn-outline-warning">Go back</a>
 
 {% endblock content %}
 

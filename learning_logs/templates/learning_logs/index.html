@@ -16,7 +16,7 @@
 
     {% if not user.is_authenticated %}
         <div class="jumbotron">
-            <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Register</a>
+            <a class="btn btn-lg btn-outline-dark" href="{% url 'users:register' %}" role="button">Register</a>
         </div>
     {% endif %}
 
@@ -30,13 +30,13 @@
 <br>
     <div>
         <h3>Banks in the UK</h3>
-        <a href="https://personal.rbs.co.uk/" target="_blank">RBS</a>
-        <a href="https://www.hsbc.co.uk/" target="_blank">HSBC</a>
-        <a href="https://www.barclays.co.uk/" target="_blank">Barclays</a>
-        <a href="https://www.halifax.co.uk/" target="_blank">Halifax</a>
-        <a href="https://www.lloydsbank.com/" target="_blank">Lloyds Bank</a>
-        <a href="https://www.metrobankonline.co.uk/" target="_blank">Metro Bank</a>
-        <a href="https://personal.natwest.com/" target="_blank">Natwest</a>
+        <a href="https://personal.rbs.co.uk/" target="_blank" class="btn btn-outline-primary">RBS</a>
+        <a href="https://www.hsbc.co.uk/" target="_blank" class="btn btn-outline-primary">HSBC</a>
+        <a href="https://www.barclays.co.uk/" target="_blank" class="btn btn-outline-primary">Barclays</a>
+        <a href="https://www.halifax.co.uk/" target="_blank" class="btn btn-outline-primary">Halifax</a>
+        <a href="https://www.lloydsbank.com/" target="_blank" class="btn btn-outline-primary">Lloyds Bank</a>
+        <a href="https://www.metrobankonline.co.uk/" target="_blank" class="btn btn-outline-primary">Metro Bank</a>
+        <a href="https://personal.natwest.com/" target="_blank" class="btn btn-outline-primary">Natwest</a>
     </div>
 
         <br>

@@ -4,7 +4,7 @@
 
     <h1>PROFILE</h1>
 
-    <a href="{% url 'learning_logs:customer_details' request.user.id %}">Edit your personal details</a><br>
+    <a href="{% url 'learning_logs:customer_details' request.user.id %}" class="btn btn-outline-success">Edit your personal details</a><br>
     <br>
 
     <p>FIRST NAME: {{ user_personal_data.first_name }} </p>
