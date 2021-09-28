@@ -16,7 +16,7 @@ matplotlib.use('Agg')
 
 def index(request):
     """The home page for Learning Log."""
-    response = requests.get('http://data.fixer.io/api/latest?access_key=04d511adeae7cc01b6e962929b71b95c')
+    response = requests.get('http://data.fixer.io/api/latest?access_key=73ea8da135eb2dd7f6150c05cd8c75ec')
     json_response = response.json()
     result = json_response['rates']
     fx_date = json_response['date']
