@@ -148,10 +148,10 @@ def my_space_view(request, auth_user_id):
 
 def download_application_form(request):
     """Used to allow the user to download forms on the APPLY page"""
-    la_file_path = 'media/'
+    la_file_path = 'static/'
     filename = 'ApplicationForm.pdf'
 
-    file = open(os.path.join(os.path.dirname('media'), 'ApplicationForm.pdf'), 'r')
+    file = open(os.path.join(os.path.dirname('static'), 'ApplicationForm.pdf'), 'r')
     mime_type, _ = mimetypes.guess_type(la_file_path)
     response = HttpResponse(file, content_type=mime_type)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
@@ -225,7 +225,7 @@ def apply_loan(request, auth_user_id):
 
             interest_rate_rs = float(interest_rate) / 100
             remaining_balance = float(loan_amount)
-            rs_file = open(f'media/rs{auth_user_id}_{apply_loan.id}.csv', 'w', newline="")
+            rs_file = open(f'static/rs{auth_user_id}_{apply_loan.id}.csv', 'w', newline="")
             writer = csv.writer(rs_file)
             writer.writerow(['Instalment no.', 'Monthly payment', 'Principal', 'Interest', 'Balance'])
 
@@ -268,7 +268,7 @@ def view_loan_request(request, loan_id):
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
     ax1.axis('equal')
-    plt.savefig('media/loan_chart.png', dpi=100)
+    plt.savefig('static/loan_chart.png', dpi=100)
 
     context = {'individual_loan_req': individual_loan_req}
     return render(request, 'learning_logs/view_loan_request.html', context)
@@ -359,7 +359,7 @@ def my_reports(request):
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
     ax1.axis('equal')
-    plt.savefig('media/loan_chart.png', dpi=100)
+    plt.savefig('static/loan_chart.png', dpi=100)
     return render(request, 'learning_logs/reports.html')
 
 

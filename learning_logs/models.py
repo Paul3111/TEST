@@ -109,7 +109,7 @@ class LoanApplication(models.Model):
     fees = models.FloatField(default=0, null=True)
     loan_total = models.FloatField(default=0, null=True)
     take_home = models.FloatField(default=0, null=True)
-    loan_documentation = models.FileField(upload_to='media', null=True, blank=True)
+    loan_documentation = models.FileField(upload_to='static', null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
