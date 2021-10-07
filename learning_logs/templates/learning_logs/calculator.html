@@ -1,6 +1,7 @@
 {% extends 'learning_logs/base.html' %}
-
+{% load static %}
 {% block content %}
+
 
 
     <form action="{% url 'learning_logs:calculator' request.user.id %}" method='post'>
@@ -25,7 +26,8 @@
 <br>
 <br>
 <br>
-   <img src="/media/loan_logo.jpg" alt="loan logo" width="600" height="500">
+{#   <img src=" /static/loan_logo.jpg" alt="loan logo" width="600" height="500">#}
+   <img src="{% static 'media/loan_logo.jpg' %}" alt="loan logo" width="600" height="500">
 
     </div>
 

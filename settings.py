@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-m@#rxid1hbkj3qdd#l)8@%6&ef=$ke3(z8akk(lbrxp0ya*4r%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['easyloanslondon.com', 'www.easyloanslondon.com/', '185.92.192.224', '127.0.0.1']
+ALLOWED_HOSTS = ['easyloanslondon.com', 'www.easyloanslondon.com/', '127.0.0.1']
 
 
 # Application definition
@@ -124,7 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -134,7 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #My settings
 LOGIN_URL = 'users:login'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '')
-MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 DATE_INPUT_FORMATS = ['%d/%m/%Y']

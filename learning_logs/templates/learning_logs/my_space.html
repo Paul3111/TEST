@@ -1,5 +1,5 @@
 {% extends 'learning_logs/base.html' %}
-
+{% load static %}
 {% block content %}
 
     <h1>PROFILE</h1>
@@ -32,7 +32,7 @@
         <p>NEWSLETTER: No</p>
     {% endif %}
 
-    <img src="/media/{{ user_personal_data.profile_picture }}" alt="Upload profile picture" width="160" height="170"><br><br>
+    <img src=" /{{ user_personal_data.profile_picture }} " alt="Upload profile picture" width="160" height="170"><br><br>
 
     <div class="container">
         <a href="{% url 'learning_logs:reports' %}" class="btn btn-outline-success">Reports</a>

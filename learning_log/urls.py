@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from . import settings  # added when I tried to display the photo on my_space template
 from django.contrib.staticfiles.urls import static  # added when I tried to display the photo on my_space template
+# from django.conf.urls.static import static  # added when I tried to display the photo on my_space template
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('learning_logs.urls')),
     path('users/', include('users.urls')),
     path('my_space/', include('django.contrib.auth.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   # this line added to display photo on my_space
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   # this line added to display photo on my_space/

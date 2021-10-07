@@ -45,7 +45,7 @@ class UserInformation(models.Model):
     alerts = models.BooleanField(default=False)
     newsletter = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    profile_picture = models.ImageField(upload_to='', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='static/media/', blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:

@@ -1,5 +1,5 @@
 {% extends 'learning_logs/base.html' %}
-
+{% load static %}
 {% block content %}
 
 <head>
@@ -18,7 +18,7 @@
     <p>WC2B 3PR</p>
     <p>UK</p>
 
-    <img src="/media/our_location.jpg" alt="our location" width="380" height="300">
+    <img src="{% static 'media/our_location.jpg' %}" alt="our location" width="380" height="300">
     <br>
     <br>
 
